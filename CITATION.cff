@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Regan"
+  given-names: "Tanner"
+- family-names: "Chiovelli"
+  given-names: "Giorgio"
+- family-names: "Michalopoulos"
+  given-names: "Stelios"
+- family-names: "Papaioannou"
+  given-names: "Elias"
+title: "Illuminating Africa?"
+date-released: 2023-11-23
+url: "https://tannerregan.github.io/tanner_regan/IlluminatingAfrica_Chiovelli_etal_unp2023.pdf"
