@@ -1,4 +1,5 @@
 #Do blooming corrections on a DMSP image following the procedure of Cao et al. 2019
+#imports-----------------------------------------------------------------------
 import rasterio as rio
 import numpy as np
 import pandas as pd

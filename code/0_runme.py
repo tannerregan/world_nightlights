@@ -30,7 +30,6 @@ viirs_cln=gdir+"/clean_viirs/VIIRS{y}_cln.tif"
 blfx_f=gdir+"/bloom_fix/DMSP{y}_blfix.tif"
 tcfx_f=gdir+"/topcode_fix/DMSP{y}_tcfix.tif"
 bltcfx_f=gdir+"/bloomtopcode_fix/DMSP{y}_bltcfix.tif"
-
 val_f=gdir+"/downgrade_viirs_validation/DMSPhat{y}{c}_ETR.tif"
 
 
