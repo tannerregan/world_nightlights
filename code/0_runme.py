@@ -92,31 +92,29 @@ clear_junk(jdir)
 
 
 #(7) downgrade viirs (raw DMSP)
-global_vars = {"dmsp_f": dmsp_cln, "viirs_f": viirs_cln, "val_f":val_f, "jdir": jdir, 
+global_vars = {"dmsp_f": dmsp_cln, "viirs_f": viirs_cln, "val_f": val_f, "jdir": jdir, 
                "aoi_rgn": aoi_rgn, "aoi_bff": aoi_bff, "aoi_gas": aoi_gas}
 runpy.run_path(code_dir+'downgrade_viirs.py', init_globals=global_vars, run_name="__main__")
 clear_junk(jdir)
 
 
-
-
-
-
 #(8) downgrade viirs (blooming corrected)
-global_vars = {"dmsp_f": blfx_f, "viirs_f": viirs_cln, "val_f":val_f,  "jdir": jdir, 
-               "afr_rgn": afr_rgn, "afr_bff": afr_bff, "afr_gas": afr_gas, "afr_prf": afr_prf}
+global_vars = {"dmsp_f": blfx_f, "viirs_f": viirs_cln, "val_f": val_f, "jdir": jdir, 
+               "aoi_rgn": aoi_rgn, "aoi_bff": aoi_bff, "aoi_gas": aoi_gas}
 runpy.run_path(code_dir+'downgrade_viirs.py', init_globals=global_vars, run_name="__main__")
 clear_junk(jdir)
+
 
 #(9) downgrade viirs (topcode corrected))
-global_vars = {"dmsp_f": tcfx_f, "viirs_f": viirs_cln, "val_f":val_f,  "jdir": jdir, 
-               "afr_rgn": afr_rgn, "afr_bff": afr_bff, "afr_gas": afr_gas, "afr_prf": afr_prf}
+global_vars = {"dmsp_f": tcfx_f, "viirs_f": viirs_cln, "val_f": val_f, "jdir": jdir, 
+               "aoi_rgn": aoi_rgn, "aoi_bff": aoi_bff, "aoi_gas": aoi_gas}
 runpy.run_path(code_dir+'downgrade_viirs.py', init_globals=global_vars, run_name="__main__")
 clear_junk(jdir)
 
+
 #(10) downgrade viirs (blooming and topcode corrected)
-global_vars = {"dmsp_f": bltcfx_f, "viirs_f": viirs_cln, "val_f":val_f, "jdir": jdir, 
-               "afr_rgn": afr_rgn, "afr_bff": afr_bff, "afr_gas": afr_gas, "afr_prf": afr_prf}
+global_vars = {"dmsp_f": bltcfx_f, "viirs_f": viirs_cln, "val_f": val_f, "jdir": jdir, 
+               "aoi_rgn": aoi_rgn, "aoi_bff": aoi_bff, "aoi_gas": aoi_gas}
 runpy.run_path(code_dir+'downgrade_viirs.py', init_globals=global_vars, run_name="__main__")
 clear_junk(jdir)
 
