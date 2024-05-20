@@ -160,8 +160,8 @@ def save_to_file(in_a,out_f,prf):
 def write_predictions_to_raster(df,prf,is_topcoded,fn):
     #need to add x and y coordinates from index/"ubercode"
     #NB: the index or "ubercode" gives the cell location in the raster grid starting at the top left, moving across columns, then down rows 
-    df['y']=np.floor(df.index/prf['width']).astype(int)
-    df['x']=(df.index-df.y*prf['width']).astype(int)
+    df.loc[:,'y']=np.floor(df.index/prf['width']).astype(int)
+    df.loc[:,'x']=(df.index-df.y*prf['width']).astype(int)
         
     #covert pandas column to a numpy array
     df = df[['x', 'y', 'dmsp_hat']] #DF needs to be in order: x,y,dmsp
@@ -184,11 +184,11 @@ def write_predictions_to_raster(df,prf,is_topcoded,fn):
     save_to_file(dmsp_hat,fn,new_prf)   
 
 def predict_batch(model, data, batch_size=1e6):
-    predictions = []
+    predictions = np.array([])
     for i in range(0, len(data), int(batch_size)):
         batch = data.iloc[int(i):int(i+batch_size)]
         batch_predictions = model.predict(batch)
-        predictions.extend(batch_predictions)
+        predictions=np.append(predictions,batch_predictions)
     return predictions
 
 def etr_predict_save(Best_ETR,is_topcoded,df,year,prf,out_f):
@@ -202,10 +202,11 @@ def etr_predict_save(Best_ETR,is_topcoded,df,year,prf,out_f):
     df=pd.get_dummies(df,columns=['AOI Regions'])
     
     #b) apply prediction (in batches)
-    df.loc[:,'dmsp_hat'] = predict_batch(Best_ETR, df)
+    df['dmsp_hat'] = predict_batch(Best_ETR, df)
+    df=df.loc[:, ['dmsp_hat']] #Only need predictions from here
     
     #c)save to file
-    write_predictions_to_raster(df.loc[:,'dmsp_hat'],prf,is_topcoded,out_f.format(y=year))
+    write_predictions_to_raster(df,prf,is_topcoded,out_f.format(y=year))
 
 
 def main(dmsp_f,viirs_f,aoi_gas,aoi_bff,aoi_rgn,jdir,val_f):
@@ -220,6 +221,7 @@ def main(dmsp_f,viirs_f,aoi_gas,aoi_bff,aoi_rgn,jdir,val_f):
     is_topcoded=(train_df['DMSP'].max()<64) #record whether data is topcoded or not
     
     #2) Train ETR on DMSP in 2013
+    print("Start model training ")
     Best_ETR=train_ETR(train_df,importance_csv=val_f.rsplit('/', 1)[0]+"/importances_ETR_"+ifn[:-4].format(y=2013)+".csv")
     train_df=train_df.drop(['DMSP'],axis=1)
     print('Setup time: '+time.strftime("%H:%M:%S", time.gmtime(time.time() - start_time)))
