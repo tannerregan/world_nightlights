@@ -86,15 +86,14 @@ def add_dmsp_data(dmsp_f,year):
 
 def arrays_to_frame(arrays,names,mask_a):
     mask_c=np.reshape(mask_a,(-1,1))
-    df=pd.DataFrame(mask_c, columns=['mask'])
+    df=pd.DataFrame(mask_c, columns=['mask']) #import the full array into a df- NB: this is important because the index (ubercode) can later on be used to convert back to (x,y) cell coordinates.
+    df=df[(df['mask']==0)]  #exclude gas and AOI masked areas now that we have an index for each cell/row    
+    df=df.drop(['mask'], axis=1) #drop the mask column
     
     for i,a in enumerate(arrays):
         print('adding new column: '+names[i])
-        c=np.reshape(a,(-1,1)) #reshape array from 2D to 1D column
-        df[names[i]]=c
-            
-    df=df[(df['mask']==0)]  #exclude gas and AOI masked areas    
-    df=df.drop(['mask'], axis=1)
+        c=a[mask_a==0] #mask out cells, and convert to a 1D column
+        df[names[i]]=c[mask_c] #add to dataframe as new column
     return df
 
 def open_etr_train_data(dmsp_f,viirs_f,aoi_gas,aoi_bff,aoi_rgn,jdir,year,prf):     
