@@ -5,7 +5,6 @@ import rasterio as rio
 import os, shutil, tarfile, math
 from rasterio import features
 from rasterio.transform import from_origin
-from matplotlib import pyplot
 
 #Functions---------------------------------------------------------------------
 def select_aoi(in_f):
@@ -56,7 +55,6 @@ def geodf2raster(in_gdf,out_f,prf):
         out_arr = out.read(1)  
         shapes = ((geom,value) for geom, value in zip(in_gdf.geometry, in_gdf.OBJECTID)) # this is where we create a generator of geom, value pairs to use in rasterizing
         burned = features.rasterize(shapes=shapes, fill=0, out=out_arr, transform=out.transform)
-        ##pyplot.imshow(burned, cmap='pink') #check the map
         out.write_band(1, burned)
 
 def unzip_tars(in_d,out_d):

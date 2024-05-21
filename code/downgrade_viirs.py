@@ -92,8 +92,7 @@ def arrays_to_frame(arrays,names,mask_a):
     
     for i,a in enumerate(arrays):
         print('adding new column: '+names[i])
-        c=a[mask_a==0] #mask out cells, and convert to a 1D column
-        df[names[i]]=c[mask_c] #add to dataframe as new column
+        df[names[i]]=a[mask_a==0] #mask out cells, convert to a 1D column, and add to dataframe as new column
     return df
 
 def open_etr_train_data(dmsp_f,viirs_f,aoi_gas,aoi_bff,aoi_rgn,jdir,year,prf):     

@@ -4,7 +4,6 @@ import rasterio as rio
 import numpy as np
 import pandas as pd
 import time, os
-from matplotlib import pyplot
 from scipy import ndimage
 import statsmodels.api as sm
 
