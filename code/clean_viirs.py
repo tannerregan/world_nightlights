@@ -4,7 +4,6 @@ import numpy as np
 import shutil, os, gzip, re
 from rasterio.windows import from_bounds
 from rasterio.enums import Resampling
-from matplotlib import pyplot
 
 #Functions---------------------------------------------------------------------
 def open_profile(aoi_f):

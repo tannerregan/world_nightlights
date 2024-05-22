@@ -261,6 +261,7 @@ def main(dmsp_f,viirs_f,aoi_gas,aoi_bff,aoi_rgn,jdir,val_f):
     print('Predict time: '+time.strftime("%H:%M:%S", time.gmtime(time.time() - start_time)))
     
     
+
 #SCRIPT------------------------------------------------------------------------
 # execute only if run as a script
 if __name__ == "__main__":
