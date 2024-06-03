@@ -60,8 +60,44 @@ Make sure to run in an environment with the following prerequisties.
 
 Requirements file (conda / pip install file)
 
-### Input Data and Their Sources
-ensure they are pre-downloaded and structured as expected by the scripts
+## 2 Data and their sources
+
+Input (source) and output (gen) data are stored in a directory `.\world_nightlights` with sub-directories `.\world_nightlights\source` and `.\world_nightlights\gen`. It is necessary to download the source data and store it in the correct sub-directories for the code to run wihtout changes
+
+### 2.1 Obtaining source data
+All data used in this analysis is from free, publicly available sources and is available for download (see below). While all data is freely available, the source data is under a variety of licenses that limit re-distribution of data in various ways. To accommodate these agreements, we do not host any of the raw data that falls under these restrictions. Instructions are provided below for obtaining each of the six input datasets.
+
+1. `.\world_nightlights\source\DMSP_VIIRS_1992_2018` contains data from the harmonisation of DMSP and VIIRS for 1992-2019 done by Li et al. 2020 in Nature. This was last downloaded 11/03/2021. It is available [here](https://figshare.com/articles/dataset/Harmonization_of_DMSP_and_VIIRS_nighttime_light_data_from_1992-2018_at_the_global_scale/9828827/2).
+
+2) VIIRS
+	-Data from the annual composites of VIIRS from 2012-2021 (i.e. Annual VNL V2) done by Elvidge et al. 2021 in Remote Sensing
+	-Data from the annual composites of VIIRS from 2022-2023 (i.e. Annual VNL V2.2) done by Elvidge et al. 2021 in Remote Sensing
+	-The files come either masked or not. The masked files rounds low-light pixels down to zero and are much smaller files. I believe we should use the masked files.
+	-I downloaded the 'average' products, we may also be interested in the 'median'.
+	-First (2012-2020)downloaded 10/03/2021, second (2021-2023)downloaded 01/05/2024 
+	-Available at https://eogdata.mines.edu/products/vnl/
+
+3) DMSP_RC
+	-Data for radiance calibrated DMSP (1996,1999,2000,2003,2004,2006, and 2010) done by Elvidge et al. 1999 in Remote Sensing of Environment and Hsu et al. 2015 in Remote Sensing.
+	-Last downloaded 22/02/2021 
+	-Available at https://eogdata.mines.edu/products/dmsp/
+
+4) gas_flaring
+	-Shapefiles of gasflaring areas by country
+	-NB: I had to also manually edit mauritania, cote d'ivoire, and ghana (these are labelled by [filenmae]_fixed)
+	-Last downloaded 05/03/2021 
+	-Available at https://ngdc.noaa.gov/eog/interest/gas_flares_countries_shapefiles.html
+
+5) DMSP
+	-Version 4 DMSP-OLS nightime lights
+	-Took data for each year from the most recent satelite, e.g. 1994 data is from sattelite F12 not F10
+	-Downloaded on July 28, 2021
+	-Downloaded from https://eogdata.mines.edu/products/dmsp/#v4_dmsp_download
+
+6) "admin_boundaries/world_regions.shp"
+	This data is available (in gbd form) from ArcGIS
+	downloaded from: https://www.arcgis.com/home/item.html?id=84dbc97915244e35808e87a881133d09
+	downloaded on: March 3, 2021
 
 ## Installation Instructions
 Clone the repository and install requirements.
