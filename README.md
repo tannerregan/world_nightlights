@@ -67,15 +67,15 @@ Input (source) and output (gen) data are stored in a directory `.\world_nightlig
 ### 2.1 Obtaining source data
 All data used in this analysis is from free, publicly available sources and is available for download (see below). While all data is freely available, the source data is under a variety of licenses that limit re-distribution of data in various ways. To accommodate these agreements, we do not host any of the raw data that falls under these restrictions. Instructions are provided below for obtaining each of the six input datasets.
 
-1. `.\world_nightlights\source\DMSP_VIIRS_1992_2018` contains data from the harmonisation of DMSP and VIIRS for 1992-2019 done by Li et al. 2020 in Nature. This was last downloaded 11/03/2021. It is available [here](https://figshare.com/articles/dataset/Harmonization_of_DMSP_and_VIIRS_nighttime_light_data_from_1992-2018_at_the_global_scale/9828827/2).
+1. `.\world_nightlights\source\DMSP_VIIRS_1992_2018\` contains data from the harmonisation of DMSP and VIIRS for 1992-2019 done by [Li et al. 2020](https://doi.org/10.3390/rs9060637). This was last downloaded 11/03/2021. It is available [here](https://figshare.com/articles/dataset/Harmonization_of_DMSP_and_VIIRS_nighttime_light_data_from_1992-2018_at_the_global_scale/9828827/2).
 
-2) VIIRS
-	-Data from the annual composites of VIIRS from 2012-2021 (i.e. Annual VNL V2) done by Elvidge et al. 2021 in Remote Sensing
-	-Data from the annual composites of VIIRS from 2022-2023 (i.e. Annual VNL V2.2) done by Elvidge et al. 2021 in Remote Sensing
+2. `.\world_nightlights\source\VIIRS\` contains data from the annual composites of VIIRS from 2012-2023 done by [Elvidge et al. 2021](https://doi.org/10.3390/rs13050922).
 	-The files come either masked or not. The masked files rounds low-light pixels down to zero and are much smaller files. I believe we should use the masked files.
-	-I downloaded the 'average' products, we may also be interested in the 'median'.
-	-First (2012-2020)downloaded 10/03/2021, second (2021-2023)downloaded 01/05/2024 
-	-Available at https://eogdata.mines.edu/products/vnl/
+	-I downloaded the 'average' products, we may also be interested in the 'median'. 
+	-First (2012-2020)downloaded 10/03/2021, second (2021-2023) downloaded 01/05/2024.  (i.e. Annual VNL V2) and 2022-2023 (i.e. Annual VNL V2.2)
+	-Available at [https://eogdata.mines.edu/products/vnl/](https://eogdata.mines.edu/products/vnl/#annual_v2)
+
+C. D. Elvidge, M. Zhizhin, T. Ghosh, F-C. Hsu, "Annual time series of global VIIRS nighttime lights derived from monthly averages: 2012 to 2019", Remote Sensing (In press)
 
 3) DMSP_RC
 	-Data for radiance calibrated DMSP (1996,1999,2000,2003,2004,2006, and 2010) done by Elvidge et al. 1999 in Remote Sensing of Environment and Hsu et al. 2015 in Remote Sensing.
