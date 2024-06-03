@@ -2,7 +2,7 @@
 
 This repository provides the code required to produce the dataset described and used the main text of:
 
-Chiovelli, G., S. Michalopoulos, E. Papaioannou, and T. Regan (2023) [Illuminating Africa?](https://tannerregan.github.io/tanner_regan/IlluminatingAfrica_Chiovelli_etal_unp2023.pdf).
+Chiovelli, G., S. Michalopoulos, E. Papaioannou, and T. Regan, (2023). [Illuminating Africa?](https://tannerregan.github.io/tanner_regan/IlluminatingAfrica_Chiovelli_etal_unp2023.pdf)
 
 This project processes satellite imagery data to generate a consistent time series of nightlight data from 1992 to 2023. Initially, the scripts clean and correct various issues, including blooming and topcoding, in data collected by the DMSP satellites from 1992 to 2012. Subsequently, the project handles VIIRS data from 2013 to 2023, downgrading its resolution to match that of the earlier DMSP series. The result is a harmonized and continuous panel of global nightlights, facilitating longitudinal studies and analyses.
 
@@ -14,7 +14,6 @@ The final dataset built with default settings is available for [download](https:
 
 ## 1. Structure of the repository
 
-###1.1. Code 
 The code folder is organized into an analysis pipeline and a package containing tools necessary to enable that pipeline.
 
 1. `prep_inputs.py`
@@ -34,8 +33,16 @@ Adjusts the resolution of VIIRS data to match that of older sensors, allowing fo
 8. `0_runme.py`
 Acts as the main executable that runs all the above scripts in sequence. This script coordinates the data flow between processes, ensuring each step is executed on the correctly prepared dataset.
 
+### 1.1. Running the Project
+To run the entire pipeline, execute the script [0_runme.py](https://github.com/tannerregan/world_nightlights/blob/main/code/0_runme.py) in python. 
 
-## Prerequisites
+Before running, adjust the high-level parameters in the 0_runme.py code:
+1. the path names for your local machine
+2. the geographical area of interest (AOI) for your project: default is the whole world (excluding Antartica)
+
+Make sure to run in an environment with the following prerequisties. 
+
+### 1.2. Python Prerequisites
 - Python 3.x
 - Libraries:
   - numpy
@@ -50,7 +57,8 @@ Acts as the main executable that runs all the above scripts in sequence. This sc
   - shutil (standard library)
   - time (standard library)
   - zipfile (standard library)
-- Input data files as described below
+
+Requirements file (conda / pip install file)
 
 ### Input Data and Their Sources
 ensure they are pre-downloaded and structured as expected by the scripts
@@ -59,7 +67,4 @@ ensure they are pre-downloaded and structured as expected by the scripts
 Clone the repository and install requirements.
 
 
-## Running the Project
-To run the entire pipeline, execute the following command:
-```bash
-python 0_runme.py
+## 
