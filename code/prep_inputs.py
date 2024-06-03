@@ -7,9 +7,9 @@ from rasterio import features
 from rasterio.transform import from_origin
 
 #Functions---------------------------------------------------------------------
-def select_aoi(in_f):
+def select_aoi(in_f, AOI_lst):
     gdf=gpd.read_file(in_f)
-    gdf=gdf[(gdf['REGION']!='Antarctica')]
+    gdf=gdf[(gdf['REGION'].apply(lambda x: any([k in x for k in AOI_lst])))]
     return gdf
 
 def create_aoi_profile(in_gdf):
@@ -74,8 +74,8 @@ def append_shapefiles(in_d,shp_lst):
         jnd_gdf = pd.concat([jnd_gdf,gdf],ignore_index=True)
     return jnd_gdf
         
-def make_aoi_regions(in_f,out_f):
-    gdf=select_aoi(in_f)
+def make_aoi_regions(in_f,out_f, AOI_lst):
+    gdf=select_aoi(in_f, AOI_lst)
     prf=create_aoi_profile(gdf)
     ##gdf.plot();
     geodf2raster(gdf,out_f,prf)
@@ -101,9 +101,9 @@ def make_gas_mask(gasf_dir,junk_d,aoi_gas,aoi_rgn):
     prf=open_profile(aoi_rgn)
     geodf2raster(jnd_gdf,aoi_gas,prf)
 
-def main(wrld_rgn,aoi_rgn,aoi_bff, gasf_dir,gas_jdir, aoi_gas):
+def main(wrld_rgn,aoi_rgn,aoi_bff, gasf_dir,gas_jdir, aoi_gas, AOI_lst):
     #Make 'ubergrid' raster of all non-antarica regions (PROFILE also gets made here)
-    make_aoi_regions(wrld_rgn, aoi_rgn)
+    make_aoi_regions(wrld_rgn, aoi_rgn, AOI_lst)
      
     #Make buffered regions
     make_aoi_buffer(wrld_rgn, aoi_bff,aoi_rgn)
@@ -115,5 +115,5 @@ def main(wrld_rgn,aoi_rgn,aoi_bff, gasf_dir,gas_jdir, aoi_gas):
 #SCRIPT------------------------------------------------------------------------
 if __name__ == "__main__":
     # execute only if run as a script
-    main(wrld_rgn,aoi_rgn,aoi_bff, gasf_dir,gas_jdir, aoi_gas)
+    main(wrld_rgn,aoi_rgn,aoi_bff, gasf_dir,gas_jdir, aoi_gas, AOI_lst)
 #END---------------------------------------------------------------------------

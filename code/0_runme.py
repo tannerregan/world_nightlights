@@ -32,6 +32,60 @@ tcfx_f=gdir+"/topcode_fix/DMSP{y}_tcfix.tif"
 bltcfx_f=gdir+"/bloomtopcode_fix/DMSP{y}_bltcfix.tif"
 val_f=gdir+"/downgrade_viirs_validation/DMSPhat{y}{c}_ETR.tif"
 
+#Choose regions for your AOI
+AOI=['Asiatic Russia',
+ 'Australia/New Zealand',
+ 'Caribbean',
+ 'Central America',
+ 'Central Asia',
+ 'Eastern Africa',
+ 'Eastern Asia',
+ 'Eastern Europe',
+ 'European Russia',
+ 'Melanesia',
+ 'Micronesia',
+ 'Middle Africa',
+ 'Northern Africa',
+ 'Northern America',
+ 'Northern Europe',
+ 'Polynesia',
+ 'South America',
+ 'Southeastern Asia',
+ 'Southern Africa',
+ 'Southern Asia',
+ 'Southern Europe',
+ 'Western Africa',
+ 'Western Asia',
+ 'Western Europe']
+
+"""
+Main dataset for world based on all regions except Antartica. Full list of world regions below:
+    AOI=['Antarctica',
+     'Asiatic Russia',
+     'Australia/New Zealand',
+     'Caribbean',
+     'Central America',
+     'Central Asia',
+     'Eastern Africa',
+     'Eastern Asia',
+     'Eastern Europe',
+     'European Russia',
+     'Melanesia',
+     'Micronesia',
+     'Middle Africa',
+     'Northern Africa',
+     'Northern America',
+     'Northern Europe',
+     'Polynesia',
+     'South America',
+     'Southeastern Asia',
+     'Southern Africa',
+     'Southern Asia',
+     'Southern Europe',
+     'Western Africa',
+     'Western Asia',
+     'Western Europe']
+"""
 
 #Functions---------------------------------------------------------------------
 def clear_junk(d):
@@ -52,7 +106,7 @@ os.mkdir(gdir+"/bloomtopcode_fix")
 
 #(1) Make global gas flare shapefile, make 'ubergrid' raster of AOI regions, make buffered regions
 global_vars = {"gasf_dir": gasf_dir, "wrld_rgn": wrld_rgn, "gas_jdir": jdir+"/gas_flares/", 
-               "aoi_rgn": aoi_rgn, "aoi_bff": aoi_bff, "aoi_gas": aoi_gas}
+               "aoi_rgn": aoi_rgn, "aoi_bff": aoi_bff, "aoi_gas": aoi_gas, "AOI_lst": AOI}
 runpy.run_path(code_dir+'prep_inputs.py', init_globals=global_vars, run_name="__main__")
 clear_junk(jdir)
 
@@ -117,6 +171,5 @@ global_vars = {"dmsp_f": bltcfx_f, "viirs_f": viirs_cln, "val_f": val_f, "jdir":
                "aoi_rgn": aoi_rgn, "aoi_bff": aoi_bff, "aoi_gas": aoi_gas}
 runpy.run_path(code_dir+'downgrade_viirs.py', init_globals=global_vars, run_name="__main__")
 clear_junk(jdir)
-
 
 #END---------------------------------------------------------------------------
