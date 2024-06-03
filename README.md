@@ -1,4 +1,4 @@
-# ILLUMINATING AFRICA?
+# Illuminating Africa?
 
 This repository provides the code required to produce the dataset described and used the main text of:
 
@@ -58,49 +58,38 @@ Make sure to run in an environment with the following prerequisties.
   - time (standard library)
   - zipfile (standard library)
 
-Requirements file (conda / pip install file)
+To set up a python environment in [anaconda](https://www.anaconda.com/):
+1. Open your anaconda terminal.
+2. Navigate to the directory containing the [conda_environment.yml](https://github.com/tannerregan/world_nightlights/blob/main/code/conda_environment.yml) file.
+3. Run the following command to create the environment: `conda env create -f conda_environment.yml`
+
 
 ## 2 Data and their sources
 
-Input (source) and output (gen) data are stored in a directory `.\world_nightlights` with sub-directories `.\world_nightlights\source` and `.\world_nightlights\gen`. It is necessary to download the source data and store it in the correct sub-directories for the code to run wihtout changes
+Input (source) and output (gen) data are stored in a directory `.\world_nightlights` with sub-directories `.\world_nightlights\source` and `.\world_nightlights\gen`. It is necessary to download the source data and store it in the correct sub-directories for the code to run without changes
+
+https://eogdata.mines.edu/nighttime_light/annual/v20/2012/VNL_v2_npp_201204-201212_global_vcmcfg_c202101211500.average_masked.tif.gz
 
 ### 2.1 Obtaining source data
-All data used in this analysis is from free, publicly available sources and is available for download (see below). While all data is freely available, the source data is under a variety of licenses that limit re-distribution of data in various ways. To accommodate these agreements, we do not host any of the raw data that falls under these restrictions. Instructions are provided below for obtaining each of the six input datasets.
+All data used in this analysis is from free, publicly available sources and is available for download (see below). While all data is freely available, the source data is under a variety of licenses that limit re-distribution of data in various ways. To accommodate these agreements, we do not host any of the raw data that falls under these restrictions. Instructions are provided below for obtaining each of the six input datasets. Save the downloaded data to their respective directories (see below) exactly as they come. 
 
 1. `.\world_nightlights\source\DMSP_VIIRS_1992_2018\` contains data from the harmonisation of DMSP and VIIRS for 1992-2019 done by [Li et al. 2020](https://doi.org/10.3390/rs9060637). This was last downloaded 11/03/2021. It is available [here](https://figshare.com/articles/dataset/Harmonization_of_DMSP_and_VIIRS_nighttime_light_data_from_1992-2018_at_the_global_scale/9828827/2).
 
-2. `.\world_nightlights\source\VIIRS\` contains data from the annual composites of VIIRS from 2012-2023 done by [Elvidge et al. 2021](https://doi.org/10.3390/rs13050922).
-	-The files come either masked or not. The masked files rounds low-light pixels down to zero and are much smaller files. I believe we should use the masked files.
-	-I downloaded the 'average' products, we may also be interested in the 'median'. 
-	-First (2012-2020)downloaded 10/03/2021, second (2021-2023) downloaded 01/05/2024.  (i.e. Annual VNL V2) and 2022-2023 (i.e. Annual VNL V2.2)
-	-Available at [https://eogdata.mines.edu/products/vnl/](https://eogdata.mines.edu/products/vnl/#annual_v2)
+2. `.\world_nightlights\source\VIIRS\` contains data from the annual composites of VIIRS from 2012-2023 done by [Elvidge et al. 2021](https://doi.org/10.3390/rs13050922). We use the 'average masked' products. For (2013-2020) we use the series 'Annual VNL V2' available [here](https://eogdata.mines.edu/nighttime_light/annual/v20/), and last downloaded 10/03/2021. For (2021-2023) we use the series 'Annual VNL V2.1' available [here](https://eogdata.mines.edu/nighttime_light/annual/v21/), and last downloaded 01/05/2024. For the year 2012, VIIRS is only available for a portion of the year, in order to have a full year we use the prouct `VNL_v2_npp_201204-201212_global_vcmcfg_c202101211500` which uses data from April 2012 to March 2013. It is available [here](https://eogdata.mines.edu/nighttime_light/annual/v20/2012/), and last downloaded 10/03/2021.
 
-C. D. Elvidge, M. Zhizhin, T. Ghosh, F-C. Hsu, "Annual time series of global VIIRS nighttime lights derived from monthly averages: 2012 to 2019", Remote Sensing (In press)
+3. `.\world_nightlights\source\DMSP_RC\` contains data for radiance calibrated DMSP (1996,1999,2000,2003,2004,2006, and 2010) done by [Elvidge et al. 1999](https://doi.org/10.1016/S0034-4257(98)00098-4) and [Hsu et al. 2015](https://doi.org/10.3390/rs70201855). This was last downloaded 22/02/2021. It is available [here](https://eogdata.mines.edu/products/dmsp/#rad_cal).
 
-3) DMSP_RC
-	-Data for radiance calibrated DMSP (1996,1999,2000,2003,2004,2006, and 2010) done by Elvidge et al. 1999 in Remote Sensing of Environment and Hsu et al. 2015 in Remote Sensing.
-	-Last downloaded 22/02/2021 
-	-Available at https://eogdata.mines.edu/products/dmsp/
+4. `.\world_nightlights\source\gas_flaring\` contains data for regions of the world with substantial gas flaring (to be masked out from nightlights). This was last downloaded 05/03/2021. It is available [here](https://ngdc.noaa.gov/eog/interest/gas_flares_countries_shapefiles.html).
 
-4) gas_flaring
-	-Shapefiles of gasflaring areas by country
-	-NB: I had to also manually edit mauritania, cote d'ivoire, and ghana (these are labelled by [filenmae]_fixed)
-	-Last downloaded 05/03/2021 
-	-Available at https://ngdc.noaa.gov/eog/interest/gas_flares_countries_shapefiles.html
+5. `.\world_nightlights\source\DMSP\` contains data for Version 4 DMSP-OLS nightime lights done by [Baugh et al. 2010](https://dx.doi.org/10.7125/apan.30.17) and [Elvidge et al. 1997](https://www.asprs.org/wp-content/uploads/pers/97journal/june/1997_jun_727-734.pdf). For each year, take data from the most recent satelite, e.g. 1994 data is from sattelite F12 not F10. This was last downloaded 28/06/2021. It is available [here](https://eogdata.mines.edu/products/dmsp/#v4_dmsp_download).
 
-5) DMSP
-	-Version 4 DMSP-OLS nightime lights
-	-Took data for each year from the most recent satelite, e.g. 1994 data is from sattelite F12 not F10
-	-Downloaded on July 28, 2021
-	-Downloaded from https://eogdata.mines.edu/products/dmsp/#v4_dmsp_download
+6.`.\world_nightlights\source\admin_boundaries\` contains data for world regions boundaries 
+  
 
-6) "admin_boundaries/world_regions.shp"
+   "admin_boundaries/world_regions.shp"
 	This data is available (in gbd form) from ArcGIS
 	downloaded from: https://www.arcgis.com/home/item.html?id=84dbc97915244e35808e87a881133d09
 	downloaded on: March 3, 2021
-
-## Installation Instructions
-Clone the repository and install requirements.
 
 
 ## 
