@@ -5,14 +5,25 @@ This project processes satellite imagery data to generate a consistent time seri
 
 ## Prerequisites
 - Python 3.x
-- Libraries: [List all necessary libraries here, e.g., numpy, pandas, etc.]
+- Libraries:
+  - numpy
+  - pandas
+  - scipy
+  - matplotlib
+  - geopandas
+  - rasterio
+  - sklearn
+  - statsmodels
+  - os (standard library)
+  - shutil (standard library)
+  - time (standard library)
+  - zipfile (standard library)
 - Satellite image data files (ensure they are pre-downloaded and structured as expected by the scripts)
 
-## Instalation instrucitons
-clone repository and install requirements
+## Installation Instructions
+Clone the repository and install requirements.
 
-## Input data and their sources
-
+## Input Data and Their Sources
 
 ## Project Structure
 
