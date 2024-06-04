@@ -38,7 +38,7 @@ To run the entire pipeline, execute the script [0_runme.py](https://github.com/t
 
 Before running, adjust the high-level parameters in the 0_runme.py code:
 1. the path names for your local machine
-2. the geographical area of interest (AOI) for your project: default is the whole world (excluding Antartica)
+2. the geographical area of interest (AOI) for your project: default is the whole world (excluding Antarctica)
 
 Make sure to run in an environment with the following prerequisties. 
 
@@ -59,10 +59,13 @@ Make sure to run in an environment with the following prerequisties.
   - time (standard library)
   - zipfile (standard library)
 
-To set up a python environment in [anaconda](https://www.anaconda.com/):
-1. Open your anaconda terminal.
-2. Navigate to the directory containing the [conda_environment.yml](https://github.com/tannerregan/world_nightlights/blob/main/code/conda_environment.yml) file.
-3. Run the following command to create the environment: `conda env create -f conda_environment.yml`
+### 1.3 Computing Environment
+
+You will need to install and activate our `illuminating-env` conda environment. Once you have [anaconda](https://www.anaconda.com/) installed on your machine, from the root directory of this repository, run:
+```
+conda env create -f code/environment.yml
+conda activate illuminating-env
+```
 
 
 ## 2 Data and their sources
