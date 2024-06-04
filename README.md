@@ -46,6 +46,7 @@ Acts as the main executable that runs all the above scripts in sequence. This sc
   - rasterio
   - sklearn
   - statsmodels
+  - pyproj
   - os (standard library)
   - shutil (standard library)
   - time (standard library)

@@ -5,6 +5,8 @@ import rasterio as rio
 import os, shutil, tarfile, math
 from rasterio import features
 from rasterio.transform import from_origin
+import pyproj
+from pyproj import CRS
 
 #Functions---------------------------------------------------------------------
 def select_aoi(in_f, AOI_lst):
@@ -75,16 +77,18 @@ def append_shapefiles(in_d,shp_lst):
     return jnd_gdf
         
 def make_aoi_regions(in_f,out_f, AOI_lst):
+    
+    
     gdf=select_aoi(in_f, AOI_lst)
     prf=create_aoi_profile(gdf)
-    ##gdf.plot();
     geodf2raster(gdf,out_f,prf)
     
 def make_aoi_buffer(in_f,out_f,aoi_rgn):  
     gdf=select_aoi(in_f)
     gdf['OBJECTID']=1
-    bff=gdf[['geometry','OBJECTID']].dissolve(by='OBJECTID').buffer(0.066) #Dissolve all countries, and buffer by 0.066 (approx. 7.5km) to get coast line
-    ##bff.plot(); #check boundaries are buffered
+    bff=gdf[['geometry','OBJECTID']].to_crs(crs=CRS.from_string('esri:54014')) #project to Eckert to make buffer
+    bff=bff.dissolve(by='OBJECTID').buffer(7.5) #Dissolve all countries, and buffer by 7.5km to get coast line
+    bff=bff.to_crs(gdf.crs) #project back
     gdf=gpd.GeoDataFrame(geometry=gpd.GeoSeries(bff))
     gdf['OBJECTID']=1
     prf=open_profile(aoi_rgn)

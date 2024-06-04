@@ -1,0 +1,15 @@
+name: myenv
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.9.13
+  - numpy
+  - pandas
+  - scipy
+  - matplotlib
+  - geopandas
+  - rasterio
+  - scikit-learn
+  - statsmodels
+  - pyproj
