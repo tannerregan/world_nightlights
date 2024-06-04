@@ -84,13 +84,7 @@ All data used in this analysis is from free, publicly available sources and is a
 
 5. `.\world_nightlights\source\DMSP\` contains data for Version 4 DMSP-OLS nightime lights done by [Baugh et al. 2010](https://dx.doi.org/10.7125/apan.30.17) and [Elvidge et al. 1997](https://www.asprs.org/wp-content/uploads/pers/97journal/june/1997_jun_727-734.pdf). For each year, take data from the most recent satelite, e.g. 1994 data is from sattelite F12 not F10. This was last downloaded 28/06/2021. It is available [here](https://eogdata.mines.edu/products/dmsp/#v4_dmsp_download).
 
-6.`.\world_nightlights\source\admin_boundaries\` contains data for world regions boundaries 
-  
-
-   "admin_boundaries/world_regions.shp"
-	This data is available (in gbd form) from ArcGIS
-	downloaded from: https://www.arcgis.com/home/item.html?id=84dbc97915244e35808e87a881133d09
-	downloaded on: March 3, 2021
+6.`.\world_nightlights\source\admin_boundaries\` contains data for world regions boundaries from [ArcGIS online](https://www.arcgis.com/home/item.html?id=84dbc97915244e35808e87a881133d09). This was last downloaded 03/03/2021. It is available [here](https://drive.google.com/drive/folders/1CMxRy0qFAAtSv7-kFYAkNg4AvuLIEddi?usp=drive_link). 
 
 
 ## 
