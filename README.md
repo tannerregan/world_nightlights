@@ -38,7 +38,7 @@ To run the entire pipeline, execute the script [0_runme.py](https://github.com/t
 
 Before running, adjust the high-level parameters in the 0_runme.py code:
 1. the path names for your local machine
-2. the geographical area of interest (AOI) for your project: default is the whole world (excluding Antartica)
+2. the geographical area of interest (AOI) for your project: default is the whole world (excluding Antarctica)
 
 Make sure to run in an environment with the following prerequisties. 
 
@@ -59,17 +59,18 @@ Make sure to run in an environment with the following prerequisties.
   - time (standard library)
   - zipfile (standard library)
 
-To set up a python environment in [anaconda](https://www.anaconda.com/):
-1. Open your anaconda terminal.
-2. Navigate to the directory containing the [conda_environment.yml](https://github.com/tannerregan/world_nightlights/blob/main/code/conda_environment.yml) file.
-3. Run the following command to create the environment: `conda env create -f conda_environment.yml`
+### 1.3 Computing Environment
+
+You will need to install and activate our `illuminating-env` conda environment. Once you have [anaconda](https://www.anaconda.com/) installed on your machine, from the root directory of this repository, run:
+```
+conda env create -f code/environment.yml
+conda activate illuminating-env
+```
 
 
 ## 2 Data and their sources
 
-Input (source) and output (gen) data are stored in a directory `.\world_nightlights` with sub-directories `.\world_nightlights\source` and `.\world_nightlights\gen`. It is necessary to download the source data and store it in the correct sub-directories for the code to run without changes
-
-https://eogdata.mines.edu/nighttime_light/annual/v20/2012/VNL_v2_npp_201204-201212_global_vcmcfg_c202101211500.average_masked.tif.gz
+Input (source) and output (gen) data are stored in a directory `.\world_nightlights` with sub-directories `.\world_nightlights\source` and `.\world_nightlights\gen`. It is necessary to download the source data and store it in the correct sub-directories for the code to run without changes, for details see below.
 
 ### 2.1 Obtaining source data
 All data used in this analysis is from free, publicly available sources and is available for download (see below). While all data is freely available, the source data is under a variety of licenses that limit re-distribution of data in various ways. To accommodate these agreements, we do not host any of the raw data that falls under these restrictions. Instructions are provided below for obtaining each of the six input datasets. Save the downloaded data to their respective directories (see below) exactly as they come. 
@@ -84,13 +85,7 @@ All data used in this analysis is from free, publicly available sources and is a
 
 5. `.\world_nightlights\source\DMSP\` contains data for Version 4 DMSP-OLS nightime lights done by [Baugh et al. 2010](https://dx.doi.org/10.7125/apan.30.17) and [Elvidge et al. 1997](https://www.asprs.org/wp-content/uploads/pers/97journal/june/1997_jun_727-734.pdf). For each year, take data from the most recent satelite, e.g. 1994 data is from sattelite F12 not F10. This was last downloaded 28/06/2021. It is available [here](https://eogdata.mines.edu/products/dmsp/#v4_dmsp_download).
 
-6.`.\world_nightlights\source\admin_boundaries\` contains data for world regions boundaries 
-  
-
-   "admin_boundaries/world_regions.shp"
-	This data is available (in gbd form) from ArcGIS
-	downloaded from: https://www.arcgis.com/home/item.html?id=84dbc97915244e35808e87a881133d09
-	downloaded on: March 3, 2021
+6.`.\world_nightlights\source\admin_boundaries\` contains data for world regions boundaries from [ArcGIS online](https://www.arcgis.com/home/item.html?id=84dbc97915244e35808e87a881133d09). This was last downloaded 03/03/2021. It is available [here](https://drive.google.com/drive/folders/1CMxRy0qFAAtSv7-kFYAkNg4AvuLIEddi?usp=drive_link). 
 
 
 ## 
