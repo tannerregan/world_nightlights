@@ -10,11 +10,33 @@ from sklearn.ensemble import ExtraTreesRegressor
 
 #Functions---------------------------------------------------------------------
 def open_profile(aoi_f):
+    """Opens a raster file and retrieves its profile, including metadata about the raster format and layout.
+    
+    Args:
+        aoi_f (str): Path to the raster file.
+
+    Returns:
+        dict: The profile (metadata) of the raster file.
+    """
     with rio.open(aoi_f) as aoi_o:
         profile = aoi_o.profile
     return profile
 
 def open_viirs_data(viirs_f,aoi_gas,aoi_bff,aoi_rgn,jdir,year, prf): 
+    """Opens VIIRS data and associated mask files, resamples VIIRS data to DMSP resolution.
+    
+    Args:
+        viirs_f (str): Path format to the VIIRS raster files.
+        aoi_gas (str): Path to the gas mask raster file.
+        aoi_bff (str): Path to the buffered region raster file.
+        aoi_rgn (str): Path to the region raster file.
+        jdir (str): Directory for storing temporary files during processing.
+        year (str): Year of the data being processed.
+        prf (dict): Profile information for resampling.
+
+    Returns:
+        tuple: Arrays of resampled VIIRS data and mask data, along with their names.
+    """
     #regions as array
     argn_o=rio.open(aoi_rgn)  
     argn_a=argn_o.read(1)
@@ -50,6 +72,14 @@ def open_viirs_data(viirs_f,aoi_gas,aoi_bff,aoi_rgn,jdir,year, prf):
     return open_arrays, open_names, mask_a
 
 def add_uni_filters(viirs_a):
+    """Applies uniform and variance filters to the VIIRS data for various window sizes.
+    
+    Args:
+        viirs_a (np.array): Array of the VIIRS data to which filters will be applied.
+
+    Returns:
+        tuple: Lists of filtered arrays and their corresponding names.
+    """
     arrays=[]
     names=[]
     st=time.time()
@@ -75,6 +105,15 @@ def add_uni_filters(viirs_a):
     return arrays,names
 
 def add_dmsp_data(dmsp_f,year):
+    """Adds DMSP data to the list of arrays and their corresponding names.
+    
+    Args:
+        dmsp_f (str): Path format to the DMSP raster files.
+        year (str): Year of the data being processed.
+
+    Returns:
+        tuple: Updated arrays and names including DMSP data.
+    """
     names=[]
     arrays=[]
     dmsp_o=rio.open(dmsp_f.format(y=year))  
@@ -85,6 +124,16 @@ def add_dmsp_data(dmsp_f,year):
     return arrays,names
 
 def arrays_to_frame(arrays,names,mask_a):
+    """Converts a list of arrays and their corresponding names into a DataFrame, applying a mask to exclude certain areas.
+    
+    Args:
+        arrays (list of np.array): List of arrays to be converted into DataFrame.
+        names (list of str): List of names for the arrays.
+        mask_a (np.array): Mask array used to filter out specific areas.
+
+    Returns:
+        pd.DataFrame: DataFrame created from the arrays and names, with masked areas excluded.
+    """
     mask_c=np.reshape(mask_a,(-1,1))
     df=pd.DataFrame(mask_c, columns=['mask']) #import the full array into a df- NB: this is important because the index (ubercode) can later on be used to convert back to (x,y) cell coordinates.
     df=df[(df['mask']==0)]  #exclude gas and AOI masked areas now that we have an index for each cell/row    
@@ -96,6 +145,21 @@ def arrays_to_frame(arrays,names,mask_a):
     return df
 
 def open_etr_train_data(dmsp_f,viirs_f,aoi_gas,aoi_bff,aoi_rgn,jdir,year,prf):     
+    """Opens and prepares training data for Extra Trees Regressor (ETR) from DMSP and VIIRS images.
+    
+    Args:
+        dmsp_f (str): Path to the DMSP raster file.
+        viirs_f (str): Path to the VIIRS raster file.
+        aoi_gas (str): Path to the gas mask raster file.
+        aoi_bff (str): Path to the buffered region raster file.
+        aoi_rgn (str): Path to the region raster file.
+        jdir (str): Directory for storing temporary files during processing.
+        year (str): Year of the data being processed.
+        prf (dict): Profile information for the data.
+
+    Returns:
+        pd.DataFrame: DataFrame containing the training data.
+    """
     #get the viirs data at DMSP resolution (resampling with mean, median, min, max) and geographical regions, and data mask
     viirs_arrays,viirs_names,mask_array=open_viirs_data(viirs_f,aoi_gas,aoi_bff,aoi_rgn,jdir,year,prf)  #open VIIRS data
     viirs_df=arrays_to_frame(viirs_arrays,viirs_names, mask_array)
@@ -124,6 +188,15 @@ def open_etr_train_data(dmsp_f,viirs_f,aoi_gas,aoi_bff,aoi_rgn,jdir,year,prf):
     return df
 
 def train_ETR(df,importance_csv):
+    """Trains an Extra Trees Regressor (ETR) model on the provided training data.
+    
+    Args:
+        train_df (pd.DataFrame): DataFrame containing the training data.
+        importance_csv (str): Path to save feature importance of the model.
+
+    Returns:
+        ExtraTreesRegressor: Trained Extra Trees Regressor model.
+    """
     #a) pick a random sample to train on (10% of data from each region)
     df = df.groupby('AOI Regions').apply(lambda x: x.sample(frac=0.10,random_state=2406))
    
@@ -152,10 +225,24 @@ def train_ETR(df,importance_csv):
     return Best_ETR
     
 def save_to_file(in_a,out_f,prf):
+    """Saves an array to a file using the given profile.
+    Args:
+        in_a (np.array): Array to be saved.
+        out_f (str): Path where the array will be saved.
+        prf (dict): Raster profile to use for the output file.
+    """
     with rio.open(out_f, 'w', **prf) as dst:
         dst.write(in_a, 1)  
         
 def write_predictions_to_raster(df,prf,is_topcoded,fn):
+    """Writes prediction data to a raster file using the specified profile.
+    
+    Args:
+        df (pd.DataFrame): DataFrame containing x, y coordinates and predicted values ('dmsp_hat').
+        prf (dict): Raster profile to use for the output file.
+        is_topcoded (bool): Indicator if the data is topcoded (1) or not (0).
+        fn (str): Filename where the predictions will be saved.
+    """
     #need to add x and y coordinates from index/"ubercode"
     #NB: the index or "ubercode" gives the cell location in the raster grid starting at the top left, moving across columns, then down rows 
     df.loc[:,'y']=np.floor(df.index/prf['width']).astype(int)
@@ -182,6 +269,16 @@ def write_predictions_to_raster(df,prf,is_topcoded,fn):
     save_to_file(dmsp_hat,fn,new_prf)   
 
 def predict_batch(model, data, batch_size=1e6):
+    """Predicts batch data using the model and returns the predictions.
+    
+    Args:
+        model (ExtraTreesRegressor): Trained model for making predictions.
+        data (pd.DataFrame): Data to be used for making predictions.
+        batch_size (int, optional): Number of rows to process in each batch. Defaults to 1e6.
+    
+    Returns:
+        np.array: Array of predictions.
+    """
     predictions = np.array([])
     for i in range(0, len(data), int(batch_size)):
         batch = data.iloc[int(i):int(i+batch_size)]
@@ -190,6 +287,16 @@ def predict_batch(model, data, batch_size=1e6):
     return predictions
 
 def etr_predict_save(Best_ETR,is_topcoded,df,year,prf,out_f):
+    """Uses the trained ETR model to predict and save downgraded VIIRS data.
+    
+    Args:
+        model (ExtraTreesRegressor): Trained Extra Trees Regressor model.
+        is_topcoded (bool): Whether the data is topcoded.
+        train_df (pd.DataFrame): DataFrame containing the training data.
+        year (str): Year of the data being processed.
+        prf (dict): Profile information for the output file.
+        out_f (str): Path to save the downgraded VIIRS data.
+    """
     #a) open contemporaneous VIIRS, apply model.
     #prdct_df=open_etr_prdct_data(viirs_f,aoi_gas,aoi_bff,aoi_rgn,jdir,year,prf)
     
@@ -208,6 +315,23 @@ def etr_predict_save(Best_ETR,is_topcoded,df,year,prf,out_f):
 
 
 def main(dmsp_f,viirs_f,aoi_gas,aoi_bff,aoi_rgn,jdir,val_f):
+    """Main function to downgrade VIIRS data to match DMSP data and validate the model.
+    
+    Args:
+        dmsp_f (str): Path format to the DMSP raster files.
+        viirs_f (str): Path format to the VIIRS raster files.
+        aoi_gas (str): Path to the gas mask raster file.
+        aoi_bff (str): Path to the buffered region raster file.
+        aoi_rgn (str): Path to the region raster file.
+        jdir (str): Directory for storing temporary files during processing.
+        val_f (str): Path format for saving validation results.
+
+    Workflow:
+        1. Opens and prepares training data for each year from 2012 to 2013.
+        2. Trains an Extra Trees Regressor (ETR) model on the training data.
+        3. Predicts and saves downgraded VIIRS data for years 2014 to 2023.
+        4. Validates the model by predicting and saving results for 2012 using 2013 data, and vice versa.
+    """
     ifn=dmsp_f.rsplit('/', 1)[-1]
     print("Downgrading VIIRS based on "+ifn)
     start_time=time.time()

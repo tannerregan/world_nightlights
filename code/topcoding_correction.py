@@ -161,6 +161,18 @@ def crop_resample(img_o,rc_f,aoi_prf):
 
 
 def clean_rc_viirs(img_f,rc_f,aoi_prf):
+    """Cleans and aligns RC and VIIRS data to be used in further analysis.
+    
+    Args:
+        img_f (str): Path to the VIIRS image file.
+        rc_f (str): Path to the RC image file.
+        aoi_prf (dict): Area of interest profile used for alignment.
+
+    Processes:
+        - Opens the VIIRS image and the RC image.
+        - Applies necessary transformations to align both images according to the AOI profile.
+        - Cleans and processes the images for further comparative analysis or corrections.
+    """
     with rio.open(img_f) as img_o:
         #crop images that DO NOT need a resample
         if img_o.transform[0]==aoi_prf['transform'][0]: 
@@ -171,6 +183,16 @@ def clean_rc_viirs(img_f,rc_f,aoi_prf):
 
 
 def open_rasters(dmsp_f,rc_f,aoi_prf):
+    """Opens and stacks the DMSP and RC raster files for processing.
+    
+    Args:
+        dmsp_f (str): Path to the DMSP raster file.
+        rc_f (str): Path to the RC raster file.
+        aoi_prf (dict): Profile containing metadata for the rasters.
+
+    Returns:
+        tuple: A tuple of numpy arrays containing the data from the DMSP and RC rasters.
+    """
     with rio.open(dmsp_f) as dmsp_o, rio.open(rc_f) as rc_o:
         dmsp_a=dmsp_o.read()
         rc_a=rc_o.read()
@@ -181,12 +203,28 @@ def open_rasters(dmsp_f,rc_f,aoi_prf):
     return stacked
 
 def rank_tc(stacked):
+    """Ranks topcoded pixels from the stacked DMSP and RC data for further processing.
+    
+    Args:
+        stacked (tuple): Tuple containing arrays of DMSP and RC data.
+
+    Returns:
+        pd.DataFrame: DataFrame containing ranked topcoded pixels and associated data.
+    """
     tc_pix=stacked[:,(55 <= stacked[0,:,:])].transpose() #get all (dmsp,rc,x,y) pairs where there is topcoding
     rank = np.lexsort((tc_pix[:,1],tc_pix[:,0])) #create a rank by RC first, and then if RC ties by DMSP
     df = pd.DataFrame(tc_pix[rank], columns=['DMSP','RC', 'x','y']) #rank is taken as the index
     return df
 
 def break_ties(df):
+    """Breaks ties in rankings for topcoded pixels, replacing ties with their average rank.
+    
+    Args:
+        df (pd.DataFrame): DataFrame containing ranked topcoded pixels and associated data.
+
+    Returns:
+        pd.DataFrame: DataFrame with ties in ranking resolved.
+    """
     df['rank'] = df.index
     df['rank'] =df.groupby(['DMSP','RC'])['rank'].transform('mean') #take mean ranks where DMSP and RC are still tied
     #divide rank by max to get percentile
@@ -194,6 +232,14 @@ def break_ties(df):
     return df
 
 def inverse_pareto(df):
+    """Uses the inverse truncated Pareto distribution to impute Digital Number (DN) values for topcoded pixels.
+    
+    Args:
+        df (pd.DataFrame): DataFrame containing ranked topcoded pixels and associated data.
+
+    Returns:
+        pd.DataFrame: DataFrame with imputed DN values for topcoded pixels.
+    """
     alpha=1.5
     L=55
     H=2000
@@ -202,6 +248,15 @@ def inverse_pareto(df):
     return df
 
 def fill_tc_with_fix(df,dmsp_a):
+    """Fills topcoded pixels in the DMSP array with the imputed fixed values.
+    
+    Args:
+        df (pd.DataFrame): DataFrame containing the imputed DN values for topcoded pixels.
+        dmsp_a (np.array): Original DMSP data array.
+
+    Returns:
+        np.array: DMSP array with topcoded pixels replaced by the imputed values.
+    """
     tc_pix_fix=df.to_numpy()
     fix_a = 0 * np.empty(dmsp_a.shape)
     fix_a[tc_pix_fix.transpose()[1].astype(int), tc_pix_fix.transpose()[0].astype(int)] = tc_pix_fix.transpose()[2]
