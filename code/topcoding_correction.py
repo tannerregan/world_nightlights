@@ -10,15 +10,40 @@ from rasterio.enums import Resampling
 
 #Functions---------------------------------------------------------------------
 def open_profile(aoi_f):
+    """Opens a raster file and retrieves its profile, including metadata about the raster format and layout.
+    
+    Args:
+        aoi_f (str): Path to the raster file.
+
+    Returns:
+        dict: The profile (metadata) of the raster file.
+    """
     with rio.open(aoi_f) as aoi_o:
         profile = aoi_o.profile
     return profile
 
 def clear_junk(d):
+    """Clears and recreates a directory to ensure it is empty before use.
+    
+    Args:
+        d (str): Path to the directory to be cleared.
+    """
     shutil.rmtree(d, ignore_errors=True) #clear directory
     os.mkdir(d) #make empty directory
     
 def check_data_match(dmsp_a,rc_a,dmsp_o,rc_o,dmsp_f):
+    """Checks if DMSP and RC data arrays are compatible in terms of shape, bounds, and coordinate reference systems (CRS).
+    
+    Args:
+        dmsp_a (np.array): DMSP data array.
+        rc_a (np.array): Reference city (RC) data array.
+        dmsp_o (rio.DatasetReader): DMSP raster object.
+        rc_o (rio.DatasetReader): RC raster object.
+        dmsp_f (str): Filename, used for error messaging.
+
+    Raises:
+        NameError: If data arrays or rasters do not match as expected.
+    """
     if not dmsp_a.shape==rc_a.shape:
         raise NameError('Arrays of differing shapes, fix '+dmsp_f)
     if not dmsp_o.bounds==rc_o.bounds:
@@ -27,16 +52,40 @@ def check_data_match(dmsp_a,rc_a,dmsp_o,rc_o,dmsp_f):
         raise NameError('Rasters have differing CRS, fix '+dmsp_f)
        
 def unzip_tar(in_f,out_d):
+    """Extracts all contents of a tar file into a specified directory.
+    
+    Args:
+        in_f (str): Path to the input tar file.
+        out_d (str): Directory where contents will be extracted.
+    """
     tar_o = tarfile.open(in_f)
     tar_o.extractall(out_d)
     tar_o.close()
     
 def unzip_gz(src_d,in_f,out_d):
+    """Unzips a gzip file from a source directory to an output directory.
+    
+    Args:
+        src_d (str): Directory containing the gzip file.
+        in_f (str): Input filename without the .gz extension.
+        out_d (str): Output directory where the file will be decompressed.
+    """
     with gzip.open(src_d+in_f+".gz", 'rb') as f_o:
         with open(out_d+in_f, 'wb') as f_out:
             shutil.copyfileobj(f_o, f_out)
     
 def unzip_rc_viirs(year,rc_d,viirs_d,out_d):
+    """Unzips and processes radiance data for Radiance City (RC) and VIIRS datasets based on the year.
+    
+    Args:
+        year (str): Year of the dataset, used to determine file naming conventions.
+        rc_d (str): Directory containing the RC data files.
+        viirs_d (str): Directory containing the VIIRS data files.
+        out_d (str): Output directory for the unzipped files.
+    
+    Returns:
+        str: Filename of the processed image.
+    """
     if int(year)<=2011:
         if int(year)<=1997:
             n="F12_19960316-19970212"
@@ -67,6 +116,15 @@ def unzip_rc_viirs(year,rc_d,viirs_d,out_d):
     return img_f        
 
 def crop(img_o,rc_f,aoi_prf):
+    """Crops an image based on the provided profile's bounds.
+    
+    Args:
+        img_f (str): Path to the image file that needs to be cropped.
+        prf (dict): Profile which includes metadata such as bounds to guide the cropping.
+
+    Returns:
+        np.array: Cropped image array.
+    """
     ul=aoi_prf['transform'] * (0, 0)
     lr=aoi_prf['transform'] * (aoi_prf['width'], aoi_prf['height'])
     l,b,r,t=ul[0],lr[1],lr[0],ul[1]
@@ -77,6 +135,16 @@ def crop(img_o,rc_f,aoi_prf):
         dst.write(img_a, 1)
       
 def crop_resample(img_o,rc_f,aoi_prf): 
+    """Crops and resamples an image to a new shape based on provided profile.
+    
+    Args:
+        img_f (str): Path to the image file.
+        prf (dict): Profile with original metadata.
+        new_shape (tuple): New dimensions to which the image should be resampled.
+
+    Returns:
+        np.array: Cropped and resampled image array.
+    """
     rf = img_o.transform[0]/aoi_prf['transform'][0] # resample factor: Downsample resolution to match AOI grid
     ul=aoi_prf['transform'] * (0, 0)
     lr=aoi_prf['transform'] * (aoi_prf['width'], aoi_prf['height'])
@@ -143,12 +211,37 @@ def fill_tc_with_fix(df,dmsp_a):
     return dmsp_a_fix
 
 def save_to_file(dmsp_a_fix,tcfx,aoi_prf):
+    """Saves the corrected DMSP data to a file.
+    
+    Args:
+        dmsp_a_fix (np.array): Corrected DMSP data array.
+        tcfx (str): Filename where the data will be saved.
+        aoi_prf (dict): Raster profile to use for the output file.
+    """
     new_prf=aoi_prf.copy()
     new_prf['dtype']=rio.int32
     with rio.open(tcfx, 'w', **new_prf) as dst:
             dst.write(dmsp_a_fix.astype(rio.int32),1)  
 
 def main(dmsp_d,rc_d,viirs_d,junk_d,tcfx_f):
+    """Main function to execute the topcoding correction workflow for DMSP satellite images.
+    
+    Args:
+        dmsp_d (str): Directory containing the DMSP data files.
+        rc_d (str): Directory containing the Radiance Calibrated (RC) data files.
+        viirs_d (str): Directory containing the VIIRS data files.
+        junk_d (str): Temporary directory used for storing intermediate files during processing.
+        tcfx_f (str): Format string for the path where the corrected images will be saved, including placeholders for the year.
+
+    Workflow:
+        1. Clears the temporary directory to prepare for new processing tasks.
+        2. Iterates over all DMSP files in the directory.
+        3. For each file, determines the corresponding year and selects the appropriate RC and VIIRS data based on the year.
+        4. Unzips and prepares RC and VIIRS data for comparison and correction.
+        5. Performs topcoding correction by comparing DMSP data with reference city (RC) data to adjust over-saturated pixel values.
+        6. Saves the corrected images to the specified output directory using the provided format string for filenames.
+    """
+    # Iterate through each DMSP file in the directory
     dmsp_lst=[f for f in os.listdir(dmsp_d) if f.startswith("DMSP")]
       
     for dmsp_f in dmsp_lst:

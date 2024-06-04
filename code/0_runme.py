@@ -1,4 +1,11 @@
-# Import arcpy module
+"""
+This file runs all files for the Illuminating Africa dataset creation.
+
+It is essential to:
+    1. Adjust the path names here to match your local environment
+    2. Select the world regions from the AOI list to match your purpose
+"""
+    
 import os, shutil, runpy
 
 #Settings----------------------------------------------------------------------

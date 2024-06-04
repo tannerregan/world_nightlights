@@ -3,7 +3,6 @@ import rasterio as rio
 import numpy as np
 import zipfile
 from rasterio.windows import from_bounds
-from matplotlib import pyplot
 
 
 #Functions---------------------------------------------------------------------
