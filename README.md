@@ -67,9 +67,7 @@ To set up a python environment in [anaconda](https://www.anaconda.com/):
 
 ## 2 Data and their sources
 
-Input (source) and output (gen) data are stored in a directory `.\world_nightlights` with sub-directories `.\world_nightlights\source` and `.\world_nightlights\gen`. It is necessary to download the source data and store it in the correct sub-directories for the code to run without changes
-
-https://eogdata.mines.edu/nighttime_light/annual/v20/2012/VNL_v2_npp_201204-201212_global_vcmcfg_c202101211500.average_masked.tif.gz
+Input (source) and output (gen) data are stored in a directory `.\world_nightlights` with sub-directories `.\world_nightlights\source` and `.\world_nightlights\gen`. It is necessary to download the source data and store it in the correct sub-directories for the code to run without changes, for details see below.
 
 ### 2.1 Obtaining source data
 All data used in this analysis is from free, publicly available sources and is available for download (see below). While all data is freely available, the source data is under a variety of licenses that limit re-distribution of data in various ways. To accommodate these agreements, we do not host any of the raw data that falls under these restrictions. Instructions are provided below for obtaining each of the six input datasets. Save the downloaded data to their respective directories (see below) exactly as they come. 
