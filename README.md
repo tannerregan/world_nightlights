@@ -67,6 +67,7 @@ conda env create -f code/environment.yml
 conda activate illuminating-env
 ```
 
+The code was last run for the worldwide dataset during May 2024 on a 8-core Intel CPU (11th gen i9-11950H @ 2.60GHz) with 32 GB of RAM, 500 GB of fast local storage. Computation took one week.
 
 ## 2 Data and their sources
 
