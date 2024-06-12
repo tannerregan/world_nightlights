@@ -19,18 +19,20 @@ The code folder is organized into an analysis pipeline and a package containing 
 1. `prep_inputs.py`
 Prepares input datasets for processing. This script organizes and structures the raw data, making it ready for cleaning and correction processes.
 2. `clean_dmsp.py`
-Cleans data from the DMSP satellites. This involves filtering, artifact removal, and preliminary data corrections specific to the DMSP sensor characteristics.
-3. `clean_viirs.py`
-Cleans data from the VIIRS satellite. Adjusts for different anomalies and calibrates the data against known benchmarks to ensure consistency across different years.
-4. `clean_dvnl.py`
-Handles specific cleaning procedures for the Day/Night Band of the VIIRS satellite, focusing on issues unique to nightlight data collection during low light conditions.
-5. `blooming_correction.py`
+Cleans data from the DMSP satellites as processed for cross-sensor calibration by [Li et al. 2020](https://doi.org/10.3390/rs9060637). This involves cutting the data to match the AOI, and aligning projections to be consistent across data sources.
+3. `clean_dmsp_ols.py`
+Cleans data from the DMSP satellites (the 'raw' data from [Elvidge et al. 1997](https://www.asprs.org/wp-content/uploads/pers/97journal/june/1997_jun_727-734.pdf)). This involves cutting the data to match the AOI, and aligning projections to be consistent across data sources.
+4. `clean_viirs.py`
+Cleans data from the VIIRS satellite. This involves cutting the data to match the AOI, and aligning projections to be consistent across data sources.
+5. `clean_dvnl.py`
+Cleans data from the DMSP-like Nighttime Lights Derived from VIIRS (DVNL). This involves cutting the data to match the AOI, and aligning projections to be consistent across data sources.
+6. `blooming_correction.py`
 Mitigates the blooming effect seen in bright urban areas where light appears to bleed over into adjacent areas, distorting true light distributions.
-6. `topcoding_correction.py`
+7. `topcoding_correction.py`
 Corrects topcoding errors where overly bright values are clipped at a maximum. This script redistributes such values to provide a more accurate representation of the light intensity.
-7. `downgrade_viirs.py`
+8. `downgrade_viirs.py`
 Adjusts the resolution of VIIRS data to match that of older sensors, allowing for consistent comparisons across the dataset's entire time span.
-8. `0_runme.py`
+9. `0_runme.py`
 Acts as the main executable that runs all the above scripts in sequence. This script coordinates the data flow between processes, ensuring each step is executed on the correctly prepared dataset.
 
 ### 1.1. Running the Project
@@ -73,14 +75,14 @@ The code was last run for the worldwide dataset during May 2024 on a 8-core Inte
 
 Input (source) and output (gen) data are stored in a directory `.\world_nightlights`. It is necessary to download the source data and store it in the correct sub-directories of `.\world_nightlights\source` for the code to run without changes, for details see below. All code-generated data will atomatically populate in `.\world_nightlights\gen`.
 
-Note: at least 5.27GB of free space is needed to store the source datasets. A further 8.4GB of free space is needed for the generated data based on the full worldwide AOI.
+Note: at least 5.62GB of free space is needed to store the source datasets. A further 8.4GB of free space is needed for the generated data based on the full worldwide AOI.
 
 ### 2.1 Obtaining source data
 All data used in this analysis is from free, publicly available sources and is available for download (see below). While all data is freely available, the source data is under a variety of licenses that limit re-distribution of data in various ways. To accommodate these agreements, we do not host any of the raw data that falls under these restrictions. Instructions are provided below for obtaining each of the six input datasets. Save the downloaded data to their respective directories (see below) exactly as they come. 
 
 1. `.\world_nightlights\source\DMSP_VIIRS_1992_2018\` contains data from the harmonisation of DMSP and VIIRS for 1992-2019 done by [Li et al. 2020](https://doi.org/10.3390/rs9060637). This was last downloaded 11/03/2021. It is available [here](https://figshare.com/articles/dataset/Harmonization_of_DMSP_and_VIIRS_nighttime_light_data_from_1992-2018_at_the_global_scale/9828827/2).
 
-2. `.\world_nightlights\source\VIIRS\` contains data from the annual composites of VIIRS from 2012-2023 done by [Elvidge et al. 2021](https://doi.org/10.3390/rs13050922). We use the 'average masked' products. For (2013-2021) we use the series 'Annual VNL V2' available [here](https://eogdata.mines.edu/nighttime_light/annual/v20/), and last downloaded 10/03/2021. For (2022-2023) we use the series 'Annual VNL V2.1' available [here](https://eogdata.mines.edu/nighttime_light/annual/v22/), and last downloaded 01/05/2024. For the year 2012, VIIRS is only available for a portion of the year, in order to have a full year we use the prouct `VNL_v2_npp_201204-201212_global_vcmcfg_c202101211500` which uses data from April 2012 to March 2013. It is available [here](https://eogdata.mines.edu/nighttime_light/annual/v20/2012/), and last downloaded 10/03/2021.
+2. `.\world_nightlights\source\VIIRS\` contains data from the annual composites of VIIRS from 2012-2023 done by [Elvidge et al. 2021](https://doi.org/10.3390/rs13050922). We use the 'average masked' products. For (2013-2021) we use the series 'Annual VNL V2' available [here](https://eogdata.mines.edu/nighttime_light/annual/v20/), and last downloaded 10/03/2021. For (2022-2023) we use the series 'Annual VNL V2.2' available [here](https://eogdata.mines.edu/nighttime_light/annual/v22/), and last downloaded 01/05/2024. For the year 2012, VIIRS is only available for a portion of the year, in order to have a full year we use the prouct `VNL_v2_npp_201204-201212_global_vcmcfg_c202101211500` which uses data from April 2012 to March 2013. It is available [here](https://eogdata.mines.edu/nighttime_light/annual/v20/2012/), and last downloaded 10/03/2021.
 
 3. `.\world_nightlights\source\DMSP_RC\` contains data for radiance calibrated DMSP (1996,1999,2000,2003,2004,2006, and 2010) done by [Elvidge et al. 1999](https://doi.org/10.1016/S0034-4257(98)00098-4) and [Hsu et al. 2015](https://doi.org/10.3390/rs70201855). We use the GeoTIFF version. Access to this data requires registration for a free account at Earth Observation Group. This was last downloaded 22/02/2021. It is available [here](https://eogdata.mines.edu/products/dmsp/#rad_cal).
 
@@ -88,9 +90,8 @@ All data used in this analysis is from free, publicly available sources and is a
 
 5. `.\world_nightlights\source\DMSP\` contains data for Version 4 DMSP-OLS nightime lights done by [Baugh et al. 2010](https://dx.doi.org/10.7125/apan.30.17) and [Elvidge et al. 1997](https://www.asprs.org/wp-content/uploads/pers/97journal/june/1997_jun_727-734.pdf). For each year, take data from the most recent satellite, e.g. 1994 data is from satellite F12 not F10. We use the "[satellite name and year].v4b_Web.stable_lights.avg_vis.tif.gz" series. This was last downloaded 28/06/2021. It is available [here](https://eogdata.mines.edu/products/dmsp/#v4_dmsp_download).
 
-6.`.\world_nightlights\source\admin_boundaries\` contains data for world regions boundaries from [ArcGIS online](https://www.arcgis.com/home/item.html?id=84dbc97915244e35808e87a881133d09). This was last downloaded 03/03/2021. It is available [here](https://drive.google.com/drive/folders/1CMxRy0qFAAtSv7-kFYAkNg4AvuLIEddi?usp=drive_link). 
+6. `.\world_nightlights\source\admin_boundaries\` contains data for world regions boundaries from [ArcGIS online](https://www.arcgis.com/home/item.html?id=84dbc97915244e35808e87a881133d09). This was last downloaded 03/03/2021. It is available [here](https://drive.google.com/drive/folders/1CMxRy0qFAAtSv7-kFYAkNg4AvuLIEddi?usp=drive_link). 
 
-7. `.\world_nightlights\source\DVNL\ ` contains data for DMSP-like Nighttime Lights Derived from VNL (DVNL) done by [Nechaev et al 2021](https://www.mdpi.com/2072-4292/13/24/5026). Download data for all available years (2013-2019). This was last downloaded 08/08/2022. It is available [here](https://eogdata.mines.edu/wwwdata/viirs_products/dvnl/).
+7. `.\world_nightlights\source\DVNL\ ` contains data for DMSP-like Nighttime Lights Derived from VIIRS (DVNL) done by [Nechaev et al 2021](https://www.mdpi.com/2072-4292/13/24/5026). Download data for all available years (2013-2019). This was last downloaded 08/08/2022. It is available [here](https://eogdata.mines.edu/wwwdata/viirs_products/dvnl/).
 
 
-## 
