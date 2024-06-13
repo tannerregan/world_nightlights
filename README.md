@@ -4,6 +4,8 @@ This repository provides the code required to produce the dataset described and 
 
 Chiovelli, G., S. Michalopoulos, E. Papaioannou, and T. Regan, (2023). [Illuminating Africa?](https://tannerregan.github.io/tanner_regan/IlluminatingAfrica_Chiovelli_etal_unp2023.pdf)
 
+Please cite the above paper in any works using the code or data from this project.
+
 This project processes satellite imagery data to generate a consistent time series of nightlight data from 1992 to 2023. Initially, the scripts clean and correct various issues, including blooming and topcoding, in data collected by the DMSP satellites from 1992 to 2012. Subsequently, the project handles VIIRS data from 2013 to 2023, downgrading its resolution to match that of the earlier DMSP series. The result is a harmonized and continuous panel of global nightlights, facilitating longitudinal studies and analyses.
 
 This repository also serves as open source code for researchers to meet their specific research needs by:
