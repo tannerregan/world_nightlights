@@ -10,8 +10,11 @@ import os, shutil, runpy
 
 #Settings----------------------------------------------------------------------
 #Directory Paths
-data_dir="C:/Users/tanner_regan/data_main/world_nightlights/"
-code_dir="C:/Users/tanner_regan/Documents/GitHub/world_nightlights/code/"
+if os.getlogin() == "tanner_regan":
+    data_dir="C:/Users/tanner_regan/data_main/world_nightlights/"
+    code_dir="C:/Users/tanner_regan/Documents/GitHub/world_nightlights/code/"
+    
+else: raise ValueError('Path not correctly specified for this computer.')
 
 #sub-directories
 sdir=data_dir+"/source/" #location of source data
