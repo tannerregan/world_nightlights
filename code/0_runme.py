@@ -15,7 +15,7 @@ code_dir="C:/Users/tanner_regan/Documents/GitHub/world_nightlights/code/"
 
 #sub-directories
 sdir=data_dir+"/source/" #location of source data
-gdir=data_dir+"/gen/" #location of generated data
+gdir=data_dir+"/gen/" #location of generated dat
 jdir=gdir+"/__junk/" #location to store temporary junk data
 
 #Input data paths
@@ -23,6 +23,7 @@ dmsp_viirs_zip=sdir+"/Li_etal_2021_series/DMSP_VIIRS_1992_2018.zip"
 rc_d=sdir+"/DMSP_RC/"
 viirs_d=sdir+"/VIIRS/"
 dvnl_d=sdir+"/DVNL/"
+dmsp_ols_d=sdir+"/DMSP/"
 gasf_dir=sdir+"/gas_flaring/"
 wrld_rgn=sdir+"/admin_boundaries/world_regions.shp"
 
@@ -33,6 +34,7 @@ aoi_gas=gdir+"/AOI_gasmask.tif"
 dmsp_cln=gdir+"/clean_dmsp/DMSP{y}_cln.tif"
 sim_dmsp_cln=gdir+"/downgrade_viirs_validation/simDMSP{y}_cln.tif"
 dvnl=gdir+"/clean_dvnl/DVNL{y}.tif"
+dmsp_ols=gdir+"/clean_dmsp_ols/DMSP{y}_ols.tif"
 viirs_cln=gdir+"/clean_viirs/VIIRS{y}_cln.tif"
 blfx_f=gdir+"/bloom_fix/DMSP{y}_blfix.tif"
 tcfx_f=gdir+"/topcode_fix/DMSP{y}_tcfix.tif"
@@ -127,6 +129,12 @@ clear_junk(jdir)
 global_vars = {"dvnl_d": dvnl_d, "jdir": jdir, "aoi_bff": aoi_bff, 
                "aoi_gas": aoi_gas, "cln_f": dvnl}
 runpy.run_path(code_dir+'clean_dvnl.py', init_globals=global_vars, run_name="__main__")
+clear_junk(jdir)
+
+#(2c) add a clean of the 'raw' DMSP-ols nightlights
+global_vars = {"dmsp_ols_d": dmsp_ols_d, "jdir": jdir, "aoi_bff": aoi_bff, 
+               "aoi_gas": aoi_gas, "cln_f": dmsp_ols}
+runpy.run_path(code_dir+'clean_dmsp_ols.py', init_globals=global_vars, run_name="__main__")
 clear_junk(jdir)
 
 #(3) clean VIIRS: unzip, crop to AOI, apply buffered mask, apply gas mask, and save
