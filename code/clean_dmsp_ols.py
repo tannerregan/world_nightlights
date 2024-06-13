@@ -2,7 +2,7 @@
 import numpy as np
 import os, shutil, gzip
 import rasterio as rio
-from rio.windows import from_bounds
+from rasterio.windows import from_bounds
 
 
 #Functions---------------------------------------------------------------------
@@ -30,7 +30,7 @@ def unzip_gz(in_f,year,out_d):
     Returns:
         str: Path to the decompressed file.
     """
-    img_f=out_d+"rawVIIRS"+year+".tif"
+    img_f=out_d+"olsDMSP"+year+".tif"
     with gzip.open(in_f, 'rb') as f_o:
         with open(img_f, 'wb') as f_out:
             shutil.copyfileobj(f_o, f_out)
@@ -89,8 +89,9 @@ def apply_masks(dmsp_a,bff_a,gas_a,cln_f,prf):
 
         
 def main(dmsp_ols_d,jdir,aoi_bff,aoi_gas,cln_f):
-    for zf in os.listdir(dmsp_ols_d):
-        
+    zf_lst=[f for f in os.listdir(dmsp_ols_d) if f[-len(".tif.gz"):]==".tif.gz"]
+    for zf in zf_lst:
+        print("working on: "+zf)
         year=zf[len("FXX"):len("FXX")+4]
         #unzip, crop
         dmsp_f=unzip_gz(dmsp_ols_d+zf,year,jdir)  
