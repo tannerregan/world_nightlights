@@ -15,10 +15,11 @@ MAKE sure to add this code to the readme
 
 #Need to install the following: pip install googledrivedownloader
 
-"""
 #conda env update --name illuminate-env --file "C:/Users/tanner_regan/Documents/GitHub/world_nightlights/code/environment.yml" --prune
 #conda remove -n illuminate-env --all
 #conda env create -f "C:/Users/tanner_regan/Documents/GitHub/world_nightlights/code/environment.yml"
+
+"""
 
 import os
 from urllib.request import urlretrieve
@@ -250,23 +251,6 @@ access_token_dict = json.loads(response.text)
 access_token = access_token_dict.get('access_token')
 
 # Submit request for 2010 file 1 with token bearer
-
-## Change data_url variable to the file you want to download
-data_url = 'https://eogdata.mines.edu/wwwdata/dmsp/rad_cal/F16_20100111-20110731_rad_v4.geotiff.tgz'
-auth = 'Bearer ' + access_token
-headers = {'Authorization': auth}
-response = requests.get(data_url, headers = headers)
-
-# Get the filename from the data_url
-output_file = os.path.basename(data_url)
-output_path = os.path.join(directory_path3, output_file)
-
-#Write the file
-with open(output_path, 'wb') as f:
-   f.write(response.content)
-print(f"File saved to {output_path}")
-
-# Submit request for 2010 file 2 with token bearer
 
 ## Change data_url variable to the file you want to download
 data_url2 = 'https://eogdata.mines.edu/wwwdata/dmsp/rad_cal/F16_20100111-20101209_rad_v4.geotiff.tgz'
