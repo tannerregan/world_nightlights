@@ -13,3 +13,5 @@ dependencies:
   - scikit-learn
   - statsmodels
   - pyproj
+  - googledrivedownloader
+  - spyder
