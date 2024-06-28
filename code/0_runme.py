@@ -16,6 +16,9 @@ if os.getlogin() == "tanner_regan":
     
 else: raise ValueError('Path not correctly specified for this computer.')
 
+#choose whether to re-download source data
+download_from_source=True #set to false if you have already downloaded the data
+
 #sub-directories
 sdir=data_dir+"/source/" #location of source data
 gdir=data_dir+"/gen/" #location of generated dat
@@ -43,6 +46,13 @@ blfx_f=gdir+"/bloom_fix/DMSP{y}_blfix.tif"
 tcfx_f=gdir+"/topcode_fix/DMSP{y}_tcfix.tif"
 bltcfx_f=gdir+"/bloomtopcode_fix/DMSP{y}_bltcfix.tif"
 val_f=gdir+"/downgrade_viirs_validation/DMSPhat{y}{c}_ETR.tif"
+
+#Account username and password for EOG mines account
+eog_username = "tanner_regan@gwu.edu"
+eog_password = "Z894gGhTGT@vjp."
+#Note: the EOG website where you can access this data requires a login. Please substitute in your username and password below
+#Create an account here: https://eogauth.mines.edu/auth/realms/master/protocol/openid-connect/auth?response_type=code&scope=email%20openid&client_id=eogdata_oidc&state=7uZNQ8KZe1LhdmXzWBel6nrA-Rg&redirect_uri=https%3A%2F%2Feogdata.mines.edu%2Feog%2Foauth2callback&nonce=k8niAQRSjvqhI5fvPYj0wTDhqwHDzy_CsmXYfRTnFV0
+
 
 #Choose regions for your AOI
 AOI=['Asiatic Russia',
@@ -105,7 +115,17 @@ def clear_junk(d):
     os.mkdir(d) #make empty directory
 
 #Run scripts-------------------------------------------------------------------
-#(0) clear out directories
+#(0) download source data
+if download_from_source==True:
+    #empty out the source directory
+    clear_junk(sdir)
+    
+    #run the source downloader
+    global_vars = {"code_dir": code_dir, "data_dir": data_dir, "username": eog_username, "password": eog_password}
+    runpy.run_path(code_dir+'prep_inputs.py', init_globals=global_vars, run_name="__main__")
+
+
+#(0b) clear out generated directories
 clear_junk(gdir)
 clear_junk(jdir)
 os.mkdir(gdir+"/clean_dmsp") 
