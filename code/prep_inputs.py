@@ -16,7 +16,7 @@ def select_aoi(in_f, AOI_lst):
         AOI_lst (list): List of regions to include in the output.
     
     Returns:
-        gpd.GeoDataFrame: GeoDataFrame containing only the selected regions.
+        gdf: GeoDataFrame containing only the selected regions.
     """
     gdf=gpd.read_file(in_f)
     gdf=gdf[(gdf['REGION'].apply(lambda x: any([k in x for k in AOI_lst])))]
@@ -32,7 +32,7 @@ def create_aoi_profile(in_gdf):
         in_gdf (gpd.GeoDataFrame): Input GeoDataFrame from which to create the profile.
 
     Returns:
-        dict: A dictionary containing the raster profile parameters.
+        profile: A dictionary containing the raster profile parameters.
     """
     # Get the bounding box (spatial extent) of the GeoDataFrame
     bbox = in_gdf.total_bounds  # Returns (minx, miny, maxx, maxy)
@@ -73,7 +73,7 @@ def open_profile(aoi_f):
         aoi_f (str): Path to the raster file.
 
     Returns:
-        dict: The profile (metadata) of the raster file.
+        profile: The profile (metadata) of the raster file.
     """
     with rio.open(aoi_f) as aoi_o:
         profile = aoi_o.profile
@@ -118,7 +118,7 @@ def append_shapefiles(junk_d,shp_lst):
         shp_lst (list): List of shapefile names to be combined.
 
     Returns:
-        gpd.GeoDataFrame: A GeoDataFrame containing all geometries from the listed shapefiles.
+        jnd_gdf: A GeoDataFrame containing all geometries from the listed shapefiles.
 
     Note:
         All shapefiles are assumed to have a compatible coordinate reference system (CRS).
@@ -151,6 +151,7 @@ def make_aoi_buffer(in_f, out_f, aoi_rgn, AOI_lst):
         in_f (str): Input file path for geographic data.
         out_f (str): Output file path for the buffered raster.
         aoi_rgn (str): Raster file of the AOI used to get profile data.
+        AOI_lst (list): List of areas to include.
     """
     gdf = select_aoi(in_f,AOI_lst)
     gdf['OBJECTID'] = 1
