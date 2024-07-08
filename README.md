@@ -34,13 +34,15 @@ Mitigates the blooming effect seen in bright urban areas where light appears to 
 Corrects topcoding errors where overly bright values are clipped at a maximum. This script redistributes such values to provide a more accurate representation of the light intensity.
 8. `downgrade_viirs.py`
 Adjusts the resolution of VIIRS data to match that of older sensors, allowing for consistent comparisons across the dataset's entire time span.
-9. `0_runme.py`
+9. `source_data_download.py`
+Automatically downloads all necessary data from various sources. You can find further details on the source data in section 2.1.
+10. `_0_runme.py`
 Acts as the main executable that runs all the above scripts in sequence. This script coordinates the data flow between processes, ensuring each step is executed on the correctly prepared dataset.
 
 ### 1.1. Running the Project
-To run the entire pipeline, execute the script [0_runme.py](https://github.com/tannerregan/world_nightlights/blob/main/code/0_runme.py) in python. 
+To run the entire pipeline, execute the script [_0_runme.py](https://github.com/tannerregan/world_nightlights/blob/main/code/_0_runme.py) in python. 
 
-Before running, adjust the high-level parameters in the 0_runme.py code:
+Before running, adjust the high-level parameters in the _0_runme.py code:
 1. the path names for your local machine
 2. the geographical area of interest (AOI) for your project: default is the whole world (excluding Antarctica)
 
