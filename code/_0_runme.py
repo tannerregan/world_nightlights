@@ -128,8 +128,27 @@ Main dataset for world based on all regions except Antartica. Full list of world
 def clear_junk(d):
     shutil.rmtree(d, ignore_errors=True) #clear directory
     os.mkdir(d) #make empty directory
+    
+def prompt_user(deleted_directory):
+    while True:
+        response = input("Warning: the following code will delete all existing content in " + deleted_directory + ". Would you like to continue? yes/no ").strip().lower()
+        if response == 'yes':
+            return True
+        elif response == 'no':
+            return False
+        else:
+            print("Please type 'yes' or 'no'.")
 
 #Run scripts-------------------------------------------------------------------
+
+# Warn user about deletion of contents in sdir folder
+if prompt_user(sdir):
+    # Your code to continue execution
+    print("Continuing execution...")
+    # Add the rest of your code here
+else:
+    print("Execution stopped.")
+    
 
 #(0a) download source data
 if download_from_source==True:
@@ -138,6 +157,22 @@ if download_from_source==True:
 
     global_vars = {"sdir": sdir, "username": eog_username, "password": eog_password}
     runpy.run_path(code_dir+'source_data_download.py', init_globals=global_vars, run_name="__main__")
+    
+# Warn user about deletion of contents in gdir folder
+if prompt_user(gdir):
+    # Your code to continue execution
+    print("Continuing execution...")
+    # Add the rest of your code here
+else:
+    print("Execution stopped.")
+    
+# Warn user about deletion of contents in jdir folder
+if prompt_user(jdir):
+    # Your code to continue execution
+    print("Continuing execution...")
+    # Add the rest of your code here
+else:
+    print("Execution stopped.")
 
 #(0b) clear out directories
 clear_junk(gdir)
