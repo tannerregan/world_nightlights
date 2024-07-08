@@ -21,7 +21,13 @@ if __name__ == "__main__":
     
     ###Create folder 'Li_etal_2021_series' to hold data from the hoarmonisation of DMSP and VIIRS for 1992-2019 done by Li et al. 2020.
     
+<<<<<<< Updated upstream
     directory_path1 = sdir+"/Li_etal_2021_series"
+=======
+    from _0_runme import sdir
+    
+    directory_path1 = sdir+"/Li_etal_2021_series/"
+>>>>>>> Stashed changes
     os.makedirs(directory_path1, exist_ok = True)
     
     
@@ -1652,6 +1658,18 @@ if __name__ == "__main__":
     print("All source data has been downloaded")
     
     
+<<<<<<< Updated upstream
     
     
     
+=======
+
+
+
+
+
+
+
+
+
+>>>>>>> Stashed changes

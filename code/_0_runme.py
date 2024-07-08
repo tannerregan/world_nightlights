@@ -7,14 +7,23 @@ It is essential to:
 """
     
 import os, shutil, runpy
+from urllib.request import urlretrieve
+import requests
+import json
+from google_drive_downloader import GoogleDriveDownloader as gdd
 
 #Settings----------------------------------------------------------------------
 #Directory Paths
+<<<<<<< Updated upstream:code/0_runme.py
 if os.getlogin() == "tanner_regan":
     data_dir="C:/Users/tanner_regan/data_main/world_nightlights/"
     code_dir="C:/Users/tanner_regan/Documents/GitHub/world_nightlights/code/"
     
 else: raise ValueError('Path not correctly specified for this computer.')
+=======
+data_dir="/Volumes/external/world_nightlights2/"
+code_dir="/Users/malloryperillo/Desktop/GitHub/world_nightlights_perillo/code/"
+>>>>>>> Stashed changes:code/_0_runme.py
 
 #choose whether to re-download source data
 download_from_source=True #set to false if you have already downloaded the data
@@ -30,6 +39,17 @@ rc_d=sdir+"/DMSP_RC/"
 viirs_d=sdir+"/VIIRS/"
 dvnl_d=sdir+"/DVNL/"
 dmsp_ols_d=sdir+"/DMSP/"
+<<<<<<< Updated upstream:code/0_runme.py
+=======
+gasf_dir=sdir+"/gas_flaring/"
+wrld_rgn=sdir+"/admin_boundaries/world_regions.shp"
+
+#Input data paths
+dmsp_viirs_zip=sdir+"/Li_etal_2021_series/DMSP_VIIRS_1992_2018.zip"
+rc_d=sdir+"/DMSP_RC/"
+viirs_d=sdir+"/VIIRS/"
+dvnl_d=sdir+"/DVNL/"
+>>>>>>> Stashed changes:code/_0_runme.py
 gasf_dir=sdir+"/gas_flaring/"
 wrld_rgn=sdir+"/admin_boundaries/world_regions.shp"
 
@@ -48,37 +68,19 @@ bltcfx_f=gdir+"/bloomtopcode_fix/DMSP{y}_bltcfix.tif"
 val_f=gdir+"/downgrade_viirs_validation/DMSPhat{y}{c}_ETR.tif"
 
 #Account username and password for EOG mines account
+<<<<<<< Updated upstream:code/0_runme.py
 eog_username = "tanner_regan@gwu.edu"
 eog_password = "Z894gGhTGT@vjp."
+=======
+eog_username = "mperillo@gwu.edu"
+eog_password = "dataMINNOW12"
+>>>>>>> Stashed changes:code/_0_runme.py
 #Note: the EOG website where you can access this data requires a login. Please substitute in your username and password below
 #Create an account here: https://eogauth.mines.edu/auth/realms/master/protocol/openid-connect/auth?response_type=code&scope=email%20openid&client_id=eogdata_oidc&state=7uZNQ8KZe1LhdmXzWBel6nrA-Rg&redirect_uri=https%3A%2F%2Feogdata.mines.edu%2Feog%2Foauth2callback&nonce=k8niAQRSjvqhI5fvPYj0wTDhqwHDzy_CsmXYfRTnFV0
 
 
 #Choose regions for your AOI
-AOI=['Asiatic Russia',
- 'Australia/New Zealand',
- 'Caribbean',
- 'Central America',
- 'Central Asia',
- 'Eastern Africa',
- 'Eastern Asia',
- 'Eastern Europe',
- 'European Russia',
- 'Melanesia',
- 'Micronesia',
- 'Middle Africa',
- 'Northern Africa',
- 'Northern America',
- 'Northern Europe',
- 'Polynesia',
- 'South America',
- 'Southeastern Asia',
- 'Southern Africa',
- 'Southern Asia',
- 'Southern Europe',
- 'Western Africa',
- 'Western Asia',
- 'Western Europe']
+AOI=['Caribbean']
 
 """
 Main dataset for world based on all regions except Antartica. Full list of world regions below:
@@ -115,17 +117,28 @@ def clear_junk(d):
     os.mkdir(d) #make empty directory
 
 #Run scripts-------------------------------------------------------------------
+<<<<<<< Updated upstream:code/0_runme.py
+=======
+
+>>>>>>> Stashed changes:code/_0_runme.py
 #(0) download source data
 if download_from_source==True:
     #empty out the source directory
     clear_junk(sdir)
     
     #run the source downloader
+<<<<<<< Updated upstream:code/0_runme.py
     global_vars = {"code_dir": code_dir, "data_dir": data_dir, "username": eog_username, "password": eog_password}
     runpy.run_path(code_dir+'prep_inputs.py', init_globals=global_vars, run_name="__main__")
 
 
 #(0b) clear out generated directories
+=======
+    global_vars = {"sdir": sdir, "username": eog_username, "password": eog_password}
+    runpy.run_path(code_dir+'source_data_download.py', init_globals=global_vars, run_name="__main__")
+
+#(0) clear out directories
+>>>>>>> Stashed changes:code/_0_runme.py
 clear_junk(gdir)
 clear_junk(jdir)
 os.mkdir(gdir+"/clean_dmsp") 
@@ -198,7 +211,7 @@ runpy.run_path(code_dir+'downgrade_viirs.py', init_globals=global_vars, run_name
 clear_junk(jdir)
 
 
-#(9) downgrade viirs (topcode corrected))
+#(9) downgrade viirs (topcode corrected)
 global_vars = {"dmsp_f": tcfx_f, "viirs_f": viirs_cln, "val_f": val_f, "jdir": jdir, 
                "aoi_rgn": aoi_rgn, "aoi_bff": aoi_bff, "aoi_gas": aoi_gas}
 runpy.run_path(code_dir+'downgrade_viirs.py', init_globals=global_vars, run_name="__main__")
