@@ -7,20 +7,16 @@ It is essential to:
 """
     
 import os, shutil, runpy
-from urllib.request import urlretrieve
-import requests
-import json
-from google_drive_downloader import GoogleDriveDownloader as gdd
 
 #Settings----------------------------------------------------------------------
 #Directory Paths
-if os.getlogin() == "username_here":
-    data_dir="C:/Users/username/data_main/world_nightlights/"
-    code_dir="C:/Users/username_here/Documents/GitHub/world_nightlights/code/"
+if os.getlogin() == "tanner_regan":
+    data_dir="C:/Users/tanner_regan/data_main/world_nightlights/"
+    code_dir="C:/Users/tanner_regan/Documents/GitHub/world_nightlights/code/"
     
-elif os.getlogin() == "mperillo":
-    data_dir=""
-    code_dir=""
+elif os.getlogin() == "your_account":
+    data_dir="your_data_directory"
+    code_dir="your_code_directory"
     
 else: raise ValueError('Path not correctly specified for this computer.')
 
@@ -144,51 +140,46 @@ def prompt_user(deleted_directory):
             print("Please type 'yes' or 'no'.")
 
 #Run scripts-------------------------------------------------------------------
-
-# Warn user about deletion of contents in sdir folder
-if prompt_user(sdir):
-    # Your code to continue execution
-    print("Continuing execution...")
-    # Add the rest of your code here
-else:
-    print("Execution stopped.")
-    
-
+#=======================SETUP DIRECTORIES======================================
 #(0a) download source data
 if download_from_source==True:
-    #empty out the source directory
-    clear_junk(sdir)
-
-    global_vars = {"sdir": sdir, "username": eog_username, "password": eog_password}
-    runpy.run_path(code_dir+'source_data_download.py', init_globals=global_vars, run_name="__main__")
+    # Warn user about deletion of contents in sdir folder
+    if prompt_user(sdir)==True:
+        print("Continuing execution...")
+        #empty out the source directory
+        clear_junk(sdir)
     
-# Warn user about deletion of contents in gdir folder
-if prompt_user(gdir):
-    # Your code to continue execution
-    print("Continuing execution...")
-    # Add the rest of your code here
-else:
-    print("Execution stopped.")
+        global_vars = {"sdir": sdir, "username": eog_username, "password": eog_password}
+        runpy.run_path(code_dir+'source_data_download.py', init_globals=global_vars, run_name="__main__")
+    else:
+        print("Execution stopped.")
     
-# Warn user about deletion of contents in jdir folder
-if prompt_user(jdir):
-    # Your code to continue execution
-    print("Continuing execution...")
-    # Add the rest of your code here
-else:
-    print("Execution stopped.")
 
 #(0b) clear out directories
-clear_junk(gdir)
-clear_junk(jdir)
-os.mkdir(gdir+"/clean_dmsp") 
-os.mkdir(gdir+"/downgrade_viirs_validation")  
-os.mkdir(gdir+"/clean_dvnl") 
-os.mkdir(gdir+"/clean_dmsp_ols") 
-os.mkdir(gdir+"/clean_viirs")
-os.mkdir(gdir+"/bloom_fix")  
-os.mkdir(gdir+"/topcode_fix") 
-os.mkdir(gdir+"/bloomtopcode_fix") 
+# Warn user about deletion of contents in gdir folder
+if prompt_user(gdir):
+    print("Continuing execution...")
+    clear_junk(gdir)
+    os.mkdir(gdir+"/clean_dmsp") 
+    os.mkdir(gdir+"/downgrade_viirs_validation")  
+    os.mkdir(gdir+"/clean_dvnl") 
+    os.mkdir(gdir+"/clean_dmsp_ols") 
+    os.mkdir(gdir+"/clean_viirs")
+    os.mkdir(gdir+"/bloom_fix")  
+    os.mkdir(gdir+"/topcode_fix") 
+    os.mkdir(gdir+"/bloomtopcode_fix") 
+else:
+    print("Execution stopped.")
+
+# Warn user about deletion of contents in jdir folder
+if prompt_user(jdir):
+    print("Continuing execution...")
+    clear_junk(jdir)
+else:
+    print("Execution stopped.")
+
+
+#=======================RUN MAIN DATA BUILD====================================
 
 #(1) Make global gas flare shapefile, make 'ubergrid' raster of AOI regions, make buffered regions
 global_vars = {"gasf_dir": gasf_dir, "wrld_rgn": wrld_rgn, "gas_jdir": jdir+"/gas_flares/", 
