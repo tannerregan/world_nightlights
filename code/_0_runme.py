@@ -18,6 +18,10 @@ if os.getlogin() == "username_here":
     data_dir="C:/Users/username/data_main/world_nightlights/"
     code_dir="C:/Users/username_here/Documents/GitHub/world_nightlights/code/"
     
+elif os.getlogin() == "mperillo":
+    data_dir=""
+    code_dir=""
+    
 else: raise ValueError('Path not correctly specified for this computer.')
 
 #choose whether to re-download source data
