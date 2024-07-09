@@ -7,12 +7,16 @@ It is essential to:
 """
     
 import os, shutil, runpy
+from urllib.request import urlretrieve
+import requests
+import json
+from google_drive_downloader import GoogleDriveDownloader as gdd
 
 #Settings----------------------------------------------------------------------
 #Directory Paths
-if os.getlogin() == "tanner_regan":
-    data_dir="C:/Users/tanner_regan/data_main/world_nightlights/"
-    code_dir="C:/Users/tanner_regan/Documents/GitHub/world_nightlights/code/"
+if os.getlogin() == "username_here":
+    data_dir="C:/Users/username/data_main/world_nightlights/"
+    code_dir="C:/Users/username_here/Documents/GitHub/world_nightlights/code/"
     
 elif os.getlogin() == "mperillo":
     data_dir=""
@@ -37,6 +41,14 @@ dmsp_ols_d=sdir+"/DMSP/"
 gasf_dir=sdir+"/gas_flaring/"
 wrld_rgn=sdir+"/admin_boundaries/world_regions.shp"
 
+#Input data paths
+dmsp_viirs_zip=sdir+"/Li_etal_2021_series/DMSP_VIIRS_1992_2018.zip"
+rc_d=sdir+"/DMSP_RC/"
+viirs_d=sdir+"/VIIRS/"
+dvnl_d=sdir+"/DVNL/"
+gasf_dir=sdir+"/gas_flaring/"
+wrld_rgn=sdir+"/admin_boundaries/world_regions.shp"
+
 #output files
 aoi_rgn=gdir+"/AOI_regions.tif"
 aoi_bff=gdir+"/AOI_buffered.tif"
@@ -52,14 +64,17 @@ bltcfx_f=gdir+"/bloomtopcode_fix/DMSP{y}_bltcfix.tif"
 val_f=gdir+"/downgrade_viirs_validation/DMSPhat{y}{c}_ETR.tif"
 
 #Account username and password for EOG mines account
-eog_username = "tanner_regan@gwu.edu"
-eog_password = "Z894gGhTGT@vjp."
+
 #Note: the EOG website where you can access this data requires a login. Please substitute in your username and password below
 #Create an account here: https://eogauth.mines.edu/auth/realms/master/protocol/openid-connect/auth?response_type=code&scope=email%20openid&client_id=eogdata_oidc&state=7uZNQ8KZe1LhdmXzWBel6nrA-Rg&redirect_uri=https%3A%2F%2Feogdata.mines.edu%2Feog%2Foauth2callback&nonce=k8niAQRSjvqhI5fvPYj0wTDhqwHDzy_CsmXYfRTnFV0
 
+eog_username = "created_username@email.com"
+eog_password = "created_password"
+
 
 #Choose regions for your AOI
-AOI=['Asiatic Russia',
+AOI=['Antarctica',
+ 'Asiatic Russia',
  'Australia/New Zealand',
  'Caribbean',
  'Central America',
@@ -117,19 +132,53 @@ Main dataset for world based on all regions except Antartica. Full list of world
 def clear_junk(d):
     shutil.rmtree(d, ignore_errors=True) #clear directory
     os.mkdir(d) #make empty directory
+    
+def prompt_user(deleted_directory):
+    while True:
+        response = input("Warning: the following code will delete all existing content in " + deleted_directory + ". Would you like to continue? yes/no ").strip().lower()
+        if response == 'yes':
+            return True
+        elif response == 'no':
+            return False
+        else:
+            print("Please type 'yes' or 'no'.")
 
 #Run scripts-------------------------------------------------------------------
-#(0) download source data
+
+# Warn user about deletion of contents in sdir folder
+if prompt_user(sdir):
+    # Your code to continue execution
+    print("Continuing execution...")
+    # Add the rest of your code here
+else:
+    print("Execution stopped.")
+    
+
+#(0a) download source data
 if download_from_source==True:
     #empty out the source directory
     clear_junk(sdir)
+
+    global_vars = {"sdir": sdir, "username": eog_username, "password": eog_password}
+    runpy.run_path(code_dir+'source_data_download.py', init_globals=global_vars, run_name="__main__")
     
-    #run the source downloader
-    global_vars = {"code_dir": code_dir, "data_dir": data_dir, "username": eog_username, "password": eog_password}
-    runpy.run_path(code_dir+'prep_inputs.py', init_globals=global_vars, run_name="__main__")
+# Warn user about deletion of contents in gdir folder
+if prompt_user(gdir):
+    # Your code to continue execution
+    print("Continuing execution...")
+    # Add the rest of your code here
+else:
+    print("Execution stopped.")
+    
+# Warn user about deletion of contents in jdir folder
+if prompt_user(jdir):
+    # Your code to continue execution
+    print("Continuing execution...")
+    # Add the rest of your code here
+else:
+    print("Execution stopped.")
 
-
-#(0b) clear out generated directories
+#(0b) clear out directories
 clear_junk(gdir)
 clear_junk(jdir)
 os.mkdir(gdir+"/clean_dmsp") 
@@ -202,7 +251,7 @@ runpy.run_path(code_dir+'downgrade_viirs.py', init_globals=global_vars, run_name
 clear_junk(jdir)
 
 
-#(9) downgrade viirs (topcode corrected))
+#(9) downgrade viirs (topcode corrected)
 global_vars = {"dmsp_f": tcfx_f, "viirs_f": viirs_cln, "val_f": val_f, "jdir": jdir, 
                "aoi_rgn": aoi_rgn, "aoi_bff": aoi_bff, "aoi_gas": aoi_gas}
 runpy.run_path(code_dir+'downgrade_viirs.py', init_globals=global_vars, run_name="__main__")

@@ -21,7 +21,12 @@ if __name__ == "__main__":
     
     ###Create folder 'Li_etal_2021_series' to hold data from the hoarmonisation of DMSP and VIIRS for 1992-2019 done by Li et al. 2020.
     
+
     directory_path1 = sdir+"/Li_etal_2021_series"
+
+    
+    directory_path1 = sdir+"/Li_etal_2021_series/"
+
     os.makedirs(directory_path1, exist_ok = True)
     
     
@@ -36,6 +41,9 @@ if __name__ == "__main__":
     file1 = sdir +"/Li_etal_2021_series/DMSP_VIIRS_1992_2018.zip"
     
     urlretrieve(url1, file1)
+    file_url = os.path.basename(url1)
+    print(file_url + " has been downloaded")
+    
     
     ###2. \world_nightlights\source\VIIRS\
         
@@ -57,6 +65,8 @@ if __name__ == "__main__":
     file2a = sdir +"/VIIRS/VNL_v2_npp_201204-201303_global_vcmcfg_c202102150000.average_masked.tif.gz"
     
     urlretrieve(url2a, file2a)
+    file_url = os.path.basename(url2a)
+    print(file_url + " has been downloaded")
     
     ###2013
     
@@ -69,6 +79,8 @@ if __name__ == "__main__":
     file2b = sdir +"/VIIRS/VNL_v2_npp_2013_global_vcmcfg_c202102150000.average_masked.tif.gz"
     
     urlretrieve(url2b, file2b)
+    file_url = os.path.basename(url2b)
+    print(file_url + " has been downloaded")
     
     ###2014
     
@@ -81,6 +93,8 @@ if __name__ == "__main__":
     file2c = sdir +"/VIIRS/VNL_v2_npp_2014_global_vcmslcfg_c202102150000.average_masked.tif.gz"
     
     urlretrieve(url2c, file2c)
+    file_url = os.path.basename(url2c)
+    print(file_url + " has been downloaded")
     
     ###2015
     
@@ -93,6 +107,8 @@ if __name__ == "__main__":
     file2d = sdir +"/VIIRS/VNL_v2_npp_2015_global_vcmslcfg_c202102150000.average_masked.tif.gz"
     
     urlretrieve(url2d, file2d)
+    file_url = os.path.basename(url2d)
+    print(file_url + " has been downloaded")
     
     ###2016
     
@@ -105,6 +121,8 @@ if __name__ == "__main__":
     file2e = sdir +"/VIIRS/VNL_v2_npp_2016_global_vcmslcfg_c202102150000.average_masked.tif.gz"
     
     urlretrieve(url2e, file2e)
+    file_url = os.path.basename(url2e)
+    print(file_url + " has been downloaded")
     
     ###2017
     
@@ -117,6 +135,8 @@ if __name__ == "__main__":
     file2f = sdir +"/VIIRS/VNL_v2_npp_2017_global_vcmslcfg_c202102150000.average_masked.tif.gz"
     
     urlretrieve(url2f, file2f)
+    file_url = os.path.basename(url2f)
+    print(file_url + " has been downloaded")
     
     ###2018
     
@@ -129,6 +149,8 @@ if __name__ == "__main__":
     file2g = sdir +"/VIIRS/VNL_v2_npp_2018_global_vcmslcfg_c202102150000.average_masked.tif.gz"
     
     urlretrieve(url2g, file2g)
+    file_url = os.path.basename(url2g)
+    print(file_url + " has been downloaded")
     
     ###2019
     
@@ -141,6 +163,8 @@ if __name__ == "__main__":
     file2h = sdir +"/VIIRS/VNL_v2_npp_2019_global_vcmslcfg_c202102150000.average_masked.tif.gz"
     
     urlretrieve(url2h, file2h)
+    file_url = os.path.basename(url2h)
+    print(file_url + " has been downloaded")
     
     ###2020
     
@@ -153,6 +177,8 @@ if __name__ == "__main__":
     file2i = sdir +"/VIIRS/VNL_v2_npp_2020_global_vcmslcfg_c202102150000.average_masked.tif.gz"
     
     urlretrieve(url2i, file2i)
+    file_url = os.path.basename(url2i)
+    print(file_url + " has been downloaded")
     
     ###2021
     
@@ -165,6 +191,8 @@ if __name__ == "__main__":
     file2j = sdir +"/VIIRS/VNL_v2_npp_2021_global_vcmslcfg_c202203152300.average_masked.tif.gz"
     
     urlretrieve(url2j, file2j)
+    file_url = os.path.basename(url2j)
+    print(file_url + " has been downloaded")
     
     ###2022
     
@@ -177,6 +205,8 @@ if __name__ == "__main__":
     file2k = sdir +"/VIIRS/VNL_v22_npp-j01_2022_global_vcmslcfg_c202303062300.average_masked.dat.tif.gz"
     
     urlretrieve(url2k, file2k)
+    file_url = os.path.basename(url2k)
+    print(file_url + " has been downloaded")
     
     ###2023
     
@@ -189,6 +219,8 @@ if __name__ == "__main__":
     file2l = sdir +"/VIIRS/VNL_npp_2023_global_vcmslcfg_v2_c202402081600.average_masked.dat.tif.gz"
     
     urlretrieve(url2l, file2l)
+    file_url = os.path.basename(url2l)
+    print(file_url + " has been downloaded")
     
     
     ###3. \world_nightlights\source\DMSP_RC\
@@ -231,7 +263,7 @@ if __name__ == "__main__":
     #Write the file
     with open(output_path2, 'wb') as f:
        f.write(response.content)
-    print(f"File saved to {output_path2}")
+    print(output_file2 + " has been downloaded")
     
     # Submit request for 2005 with token bearer
     
@@ -248,7 +280,7 @@ if __name__ == "__main__":
     #Write the file
     with open(output_path3, 'wb') as f:
        f.write(response.content)
-    print(f"File saved to {output_path3}")
+    print(output_file3 + " has been downloaded")
     
     # Submit request for 2004 with token bearer
     
@@ -265,7 +297,7 @@ if __name__ == "__main__":
     #Write the file
     with open(output_path4, 'wb') as f:
        f.write(response.content)
-    print(f"File saved to {output_path4}")
+    print(output_file4 + " has been downloaded")
     
     # Submit request for 2002 with token bearer
     
@@ -282,7 +314,7 @@ if __name__ == "__main__":
     #Write the file
     with open(output_path5, 'wb') as f:
        f.write(response.content)
-    print(f"File saved to {output_path5}")
+    print(output_file5 + " has been downloaded")
     
     # Submit request for 2000 with token bearer
     
@@ -299,7 +331,7 @@ if __name__ == "__main__":
     #Write the file
     with open(output_path6, 'wb') as f:
        f.write(response.content)
-    print(f"File saved to {output_path6}")
+    print(output_file6 + " has been downloaded")
     
     # Submit request for 1999 with token bearer
     
@@ -316,7 +348,7 @@ if __name__ == "__main__":
     #Write the file
     with open(output_path7, 'wb') as f:
        f.write(response.content)
-    print(f"File saved to {output_path7}")
+    print(output_file7 + " has been downloaded")
     
     # Submit request for 1996 with token bearer
     
@@ -333,7 +365,7 @@ if __name__ == "__main__":
     #Write the file
     with open(output_path8, 'wb') as f:
        f.write(response.content)
-    print(f"File saved to {output_path8}")
+    print(output_file8 + " has been downloaded")
     
     
     ###4. \world_nightlights\source\gas_flaring\
@@ -358,6 +390,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Angola
     
@@ -370,6 +403,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Argentina
     
@@ -382,6 +416,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Australia
     
@@ -394,6 +429,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Azerbaijan
     
@@ -406,6 +442,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Belgium
     
@@ -418,6 +455,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Bolivia
     
@@ -430,6 +468,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Brazil
     
@@ -442,6 +481,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Brunei
     
@@ -454,6 +494,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Cameroon
     
@@ -466,6 +507,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Canada
     
@@ -478,6 +520,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Chad
     
@@ -490,6 +533,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Chile
     
@@ -502,6 +546,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #China
     
@@ -514,6 +559,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Colombia
     
@@ -526,6 +572,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Congo
     
@@ -538,6 +585,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Cote dIvoire
     
@@ -550,6 +598,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Dem Rep Congo
     
@@ -562,6 +611,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Denmark
     
@@ -574,6 +624,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #East Timor
     
@@ -586,6 +637,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Ecuador
     
@@ -598,6 +650,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Egypt
     
@@ -610,6 +663,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Eq Guinea
     
@@ -622,6 +676,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Gabon
     
@@ -634,6 +689,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Germany
     
@@ -646,6 +702,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Ghana
     
@@ -658,6 +715,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #India
     
@@ -670,6 +728,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Indonesia
     
@@ -682,6 +741,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Iran
     
@@ -694,6 +754,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Iraq
     
@@ -706,6 +767,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Kazakhstan
     
@@ -718,6 +780,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Kuwait
     
@@ -730,6 +793,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Libya
     
@@ -742,6 +806,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Malaysia
     
@@ -754,6 +819,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Mauritania
     
@@ -766,6 +832,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Mexico
     
@@ -778,6 +845,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Myanmar
     
@@ -790,6 +858,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Netherlands
     
@@ -802,6 +871,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Nigeria
     
@@ -814,6 +884,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Norway
     
@@ -826,6 +897,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Oman
     
@@ -838,6 +910,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Peru
     
@@ -850,6 +923,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Philippines
     
@@ -862,6 +936,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #PNG
     
@@ -874,6 +949,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Qatar
     
@@ -886,6 +962,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Romania
     
@@ -898,6 +975,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Russia KM
     
@@ -910,6 +988,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Russia not KM
     
@@ -922,6 +1001,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Saudi Arabia
     
@@ -934,6 +1014,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #South Africa
     
@@ -946,6 +1027,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Sudan
     
@@ -958,6 +1040,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Syria
     
@@ -970,6 +1053,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Thailand
     
@@ -982,6 +1066,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Trinidad
     
@@ -994,6 +1079,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Tunisia
     
@@ -1006,6 +1092,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Turkmenistan
     
@@ -1018,6 +1105,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #UAE
     
@@ -1030,6 +1118,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #UK
     
@@ -1042,6 +1131,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #USA-Alaska
     
@@ -1054,6 +1144,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #USA-CONUS
     
@@ -1066,6 +1157,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Uzbekistan
     
@@ -1078,6 +1170,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Venezuela
     
@@ -1090,6 +1183,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Vietnam
     
@@ -1102,6 +1196,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #Yemen
     
@@ -1114,6 +1209,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     #New Zealand
     
@@ -1126,6 +1222,7 @@ if __name__ == "__main__":
     outputflare = os.path.join(directory_path4, fileflare)
     
     urlretrieve(urlflare, outputflare)
+    print(fileflare + " has been downloaded")
     
     
     ###5. \world_nightlights\source\DMSP\
@@ -1153,7 +1250,7 @@ if __name__ == "__main__":
     #Write the file
     with open(output_path, 'wb') as f:
        f.write(response.content)
-    print(f"File saved to {output_path}")
+    print(output_file + " has been downloaded")
     
     #1993 Satellite
     
@@ -1170,7 +1267,7 @@ if __name__ == "__main__":
     #Write the file
     with open(output_path, 'wb') as f:
        f.write(response.content)
-    print(f"File saved to {output_path}")
+    print(output_file + " has been downloaded")
     
     #1994 Satellite
     
@@ -1187,7 +1284,7 @@ if __name__ == "__main__":
     #Write the file
     with open(output_path, 'wb') as f:
        f.write(response.content)
-    print(f"File saved to {output_path}")
+    print(output_file + " has been downloaded")
     
     #1995 Satellite
     
@@ -1204,7 +1301,7 @@ if __name__ == "__main__":
     #Write the file
     with open(output_path, 'wb') as f:
        f.write(response.content)
-    print(f"File saved to {output_path}")
+    print(output_file + " has been downloaded")
     
     #1996 Satellite
     
@@ -1221,7 +1318,7 @@ if __name__ == "__main__":
     #Write the file
     with open(output_path, 'wb') as f:
        f.write(response.content)
-    print(f"File saved to {output_path}")
+    print(output_file + " has been downloaded")
     
     #1997 Satellite
     
@@ -1238,7 +1335,7 @@ if __name__ == "__main__":
     #Write the file
     with open(output_path, 'wb') as f:
        f.write(response.content)
-    print(f"File saved to {output_path}")
+    print(output_file + " has been downloaded")
     
     #1998 Satellite
     
@@ -1255,7 +1352,7 @@ if __name__ == "__main__":
     #Write the file
     with open(output_path, 'wb') as f:
        f.write(response.content)
-    print(f"File saved to {output_path}")
+    print(output_file + " has been downloaded")
     
     #1999 Satellite
     
@@ -1272,7 +1369,7 @@ if __name__ == "__main__":
     #Write the file
     with open(output_path, 'wb') as f:
        f.write(response.content)
-    print(f"File saved to {output_path}")
+    print(output_file + " has been downloaded")
     
     #2000 Satellite
     
@@ -1289,7 +1386,7 @@ if __name__ == "__main__":
     #Write the file
     with open(output_path, 'wb') as f:
        f.write(response.content)
-    print(f"File saved to {output_path}")
+    print(output_file + " has been downloaded")
     
     #2001 Satellite
     
@@ -1306,7 +1403,7 @@ if __name__ == "__main__":
     #Write the file
     with open(output_path, 'wb') as f:
        f.write(response.content)
-    print(f"File saved to {output_path}")
+    print(output_file + " has been downloaded")
     
     #2002 Satellite
     
@@ -1323,7 +1420,7 @@ if __name__ == "__main__":
     #Write the file
     with open(output_path, 'wb') as f:
        f.write(response.content)
-    print(f"File saved to {output_path}")
+    print(output_file + " has been downloaded")
     
     #2003 Satellite
     
@@ -1340,7 +1437,7 @@ if __name__ == "__main__":
     #Write the file
     with open(output_path, 'wb') as f:
        f.write(response.content)
-    print(f"File saved to {output_path}")
+    print(output_file + " has been downloaded")
     
     #2004 Satellite
     
@@ -1357,7 +1454,7 @@ if __name__ == "__main__":
     #Write the file
     with open(output_path, 'wb') as f:
        f.write(response.content)
-    print(f"File saved to {output_path}")
+    print(output_file + " has been downloaded")
     
     #2005 Satellite
     
@@ -1374,7 +1471,7 @@ if __name__ == "__main__":
     #Write the file
     with open(output_path, 'wb') as f:
        f.write(response.content)
-    print(f"File saved to {output_path}")
+    print(output_file + " has been downloaded")
     
     #2006 Satellite
     
@@ -1391,7 +1488,7 @@ if __name__ == "__main__":
     #Write the file
     with open(output_path, 'wb') as f:
        f.write(response.content)
-    print(f"File saved to {output_path}")
+    print(output_file + " has been downloaded")
     
     #2007 Satellite
     
@@ -1408,7 +1505,7 @@ if __name__ == "__main__":
     #Write the file
     with open(output_path, 'wb') as f:
        f.write(response.content)
-    print(f"File saved to {output_path}")
+    print(output_file + " has been downloaded")
     
     #2008 Satellite
     
@@ -1425,7 +1522,7 @@ if __name__ == "__main__":
     #Write the file
     with open(output_path, 'wb') as f:
        f.write(response.content)
-    print(f"File saved to {output_path}")
+    print(output_file + " has been downloaded")
     
     #2009 Satellite
     
@@ -1442,7 +1539,7 @@ if __name__ == "__main__":
     #Write the file
     with open(output_path, 'wb') as f:
        f.write(response.content)
-    print(f"File saved to {output_path}")
+    print(output_file + " has been downloaded")
     
     #2010 Satellite
     
@@ -1459,7 +1556,7 @@ if __name__ == "__main__":
     #Write the file
     with open(output_path, 'wb') as f:
        f.write(response.content)
-    print(f"File saved to {output_path}")
+    print(output_file + " has been downloaded")
     
     #2011 Satellite
     
@@ -1476,7 +1573,7 @@ if __name__ == "__main__":
     #Write the file
     with open(output_path, 'wb') as f:
        f.write(response.content)
-    print(f"File saved to {output_path}")
+    print(output_file + " has been downloaded")
     
     #2012 Satellite
     
@@ -1493,7 +1590,7 @@ if __name__ == "__main__":
     #Write the file
     with open(output_path, 'wb') as f:
        f.write(response.content)
-    print(f"File saved to {output_path}")
+    print(output_file + " has been downloaded")
     
     #2013 Satellite
     
@@ -1510,7 +1607,7 @@ if __name__ == "__main__":
     #Write the file
     with open(output_path, 'wb') as f:
        f.write(response.content)
-    print(f"File saved to {output_path}")
+    print(output_file + " has been downloaded")
     
     
     ###6. \world_nightlights\source\admin_boundaries\
@@ -1527,36 +1624,42 @@ if __name__ == "__main__":
     gdd.download_file_from_google_drive(file_id='19yy-U5Ur4D4o0eYl6Ol7sQmT8ETfn37-',
                                         dest_path= directory_path6 + '/world_regions.cpg',
                                         unzip=False)
+    print("world_regions.cpg has been downloaded")
     
     #world_regions.dbf
     
     gdd.download_file_from_google_drive(file_id='1tc3ZQKeswoi2Vl_P0bW9wKCgJ9zCd115',
                                         dest_path= directory_path6 + '/world_regions.dbf',
                                         unzip=False)
+    print("world_regions.dbf has been downloaded")
     
     #world_regions.lpk
     
     gdd.download_file_from_google_drive(file_id='1Xhx48MeMlAzR8rnNc5zTDEBIdhiI2DGV',
                                         dest_path= directory_path6 + '/world_regions.lpk',
                                         unzip=False)
+    print("world_regions.lpk has been downloaded")
     
     #world_regions.prj
     
     gdd.download_file_from_google_drive(file_id='1djt-rIfN7MPy1NE1hhmHIEnBJNzmBlZW',
                                         dest_path= directory_path6 + '/world_regions.prj',
                                         unzip=False)
+    print("world_regions.prj has been downloaded")
     
     #world_regions.shp
     
     gdd.download_file_from_google_drive(file_id='17TOG-CoosRBE84ObLbds1O1tq14lAklr',
                                         dest_path= directory_path6 + '/world_regions.shp',
                                         unzip=False)
+    print("world_regions.shp has been downloaded")
     
     #world_regions.shx
     
     gdd.download_file_from_google_drive(file_id='1ylDPxHnreqdtGIADtPfXj5s0GsPsAvDB',
                                         dest_path= directory_path6 + '/world_regions.shx',
                                         unzip=False)
+    print("world_regions.shx has been downloaded")
     
     
     
@@ -1580,6 +1683,7 @@ if __name__ == "__main__":
     filedvnl = os.path.basename(url_dvnl)
     outputdvnl = os.path.join(directory_path7, filedvnl)
     urlretrieve(url_dvnl, outputdvnl)
+    print(filedvnl + " has been downloaded")
     
     #2014
     
@@ -1591,6 +1695,7 @@ if __name__ == "__main__":
     filedvnl = os.path.basename(url_dvnl)
     outputdvnl = os.path.join(directory_path7, filedvnl)
     urlretrieve(url_dvnl, outputdvnl)
+    print(filedvnl + " has been downloaded")
     
     #2015
     
@@ -1602,6 +1707,7 @@ if __name__ == "__main__":
     filedvnl = os.path.basename(url_dvnl)
     outputdvnl = os.path.join(directory_path7, filedvnl)
     urlretrieve(url_dvnl, outputdvnl)
+    print(filedvnl + " has been downloaded")
     
     #2016
     
@@ -1613,6 +1719,7 @@ if __name__ == "__main__":
     filedvnl = os.path.basename(url_dvnl)
     outputdvnl = os.path.join(directory_path7, filedvnl)
     urlretrieve(url_dvnl, outputdvnl)
+    print(filedvnl + " has been downloaded")
     
     #2017
     
@@ -1624,6 +1731,7 @@ if __name__ == "__main__":
     filedvnl = os.path.basename(url_dvnl)
     outputdvnl = os.path.join(directory_path7, filedvnl)
     urlretrieve(url_dvnl, outputdvnl)
+    print(filedvnl + " has been downloaded")
     
     #2018
     
@@ -1635,6 +1743,7 @@ if __name__ == "__main__":
     filedvnl = os.path.basename(url_dvnl)
     outputdvnl = os.path.join(directory_path7, filedvnl)
     urlretrieve(url_dvnl, outputdvnl)
+    print(filedvnl + " has been downloaded")
     
     #2019
     
@@ -1646,12 +1755,9 @@ if __name__ == "__main__":
     filedvnl = os.path.basename(url_dvnl)
     outputdvnl = os.path.join(directory_path7, filedvnl)
     urlretrieve(url_dvnl, outputdvnl)
-    
+    print(filedvnl + " has been downloaded")
     
     
     print("All source data has been downloaded")
     
-    
-    
-    
-    
+

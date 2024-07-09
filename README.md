@@ -34,13 +34,15 @@ Mitigates the blooming effect seen in bright urban areas where light appears to 
 Corrects topcoding errors where overly bright values are clipped at a maximum. This script redistributes such values to provide a more accurate representation of the light intensity.
 8. `downgrade_viirs.py`
 Adjusts the resolution of VIIRS data to match that of older sensors, allowing for consistent comparisons across the dataset's entire time span.
-9. `0_runme.py`
+9. `source_data_download.py`
+Automatically downloads all necessary data from various sources. You can find further details on the source data in section 2.1.
+10. `_0_runme.py`
 Acts as the main executable that runs all the above scripts in sequence. This script coordinates the data flow between processes, ensuring each step is executed on the correctly prepared dataset.
 
 ### 1.1. Running the Project
-To run the entire pipeline, execute the script [0_runme.py](https://github.com/tannerregan/world_nightlights/blob/main/code/0_runme.py) in python. 
+To run the entire pipeline, execute the script [_0_runme.py](https://github.com/tannerregan/world_nightlights/blob/main/code/_0_runme.py) in python. 
 
-Before running, adjust the high-level parameters in the 0_runme.py code:
+Before running, adjust the high-level parameters in the _0_runme.py code:
 1. the path names for your local machine
 2. the geographical area of interest (AOI) for your project: default is the whole world (excluding Antarctica)
 
@@ -64,6 +66,7 @@ Make sure to run in an environment with the following prerequisites.
   - time (standard library)
   - zipfile (standard library)
 
+
 ### 1.3 Computing Environment
 
 You will need to install and activate our `illuminating-env` conda environment. Once you have [anaconda](https://www.anaconda.com/) installed on your machine, from the root directory of this repository, run:
@@ -76,7 +79,7 @@ The code was last run for the worldwide dataset during May 2024 on a 8-core Inte
 
 ## 2 Data and their sources
 
-Input (source) and output (gen) data are stored in a directory `.\world_nightlights`. It is necessary to download the source data and store it in the correct sub-directories of `.\world_nightlights\source` for the code to run without changes, for details see below. All code-generated data will atomatically populate in `.\world_nightlights\gen`.
+Input (source) and output (gen) data are stored in a directory `.\world_nightlights`. It is necessary to download the source data and store it in the correct sub-directories of `.\world_nightlights\source` for the code to run without changes, for details see below. All code-generated data will automatically populate in `.\world_nightlights\gen`.
 
 Note: at least 5.62GB of free space is needed to store the source datasets. A further 8.9GB of free space is needed for the generated data based on the full worldwide AOI.
 
@@ -91,7 +94,7 @@ All data used in this analysis is from free, publicly available sources and is a
 
 4. `.\world_nightlights\source\gas_flaring\` contains data for regions of the world with substantial gas flaring (to be masked out from nightlights). This was last downloaded 05/03/2021. It is available [here](https://ngdc.noaa.gov/eog/interest/gas_flares_countries_shapefiles.html).
 
-5. `.\world_nightlights\source\DMSP\` contains data for Version 4 DMSP-OLS nighttime lights done by [Baugh et al. 2010](https://dx.doi.org/10.7125/apan.30.17) and [Elvidge et al. 1997](https://www.asprs.org/wp-content/uploads/pers/97journal/june/1997_jun_727-734.pdf). For each year, take data from the most recent satellite, e.g. 1994 data is from satellite F12 not F10. We use the "[satellite name and year].v4b.stable_lights.avg_vis.tif.gz" series. Access to this data also requires an account at Earth Observation Group. This was last downloaded 28/06/2021. It is available [here](https://eogdata.mines.edu/products/dmsp/#v4_dmsp_download).
+5. `.\world_nightlights\source\DMSP\` contains data for Version 4 DMSP-OLS nighttime lights done by [Baugh et al. 2010](https://dx.doi.org/10.7125/apan.30.17) and [Elvidge et al. 1997](https://www.asprs.org/wp-content/uploads/pers/97journal/june/1997_jun_727-734.pdf). For each year, take data from the most recent satellite, e.g. 1994 data is from satellite F12 not F10. We use the "[satellite name and year].v4b.global.stable_lights.avg_vis.tif.gz" series. Access to this data also requires an account at Earth Observation Group.  This was last downloaded 28/06/2021. It is available [here](https://eogdata.mines.edu/products/dmsp/#v4_dmsp_download).
 
 6. `.\world_nightlights\source\admin_boundaries\` contains data for world regions boundaries from [ArcGIS online](https://www.arcgis.com/home/item.html?id=84dbc97915244e35808e87a881133d09). This was last downloaded 03/03/2021. It is available [here](https://drive.google.com/drive/folders/1CMxRy0qFAAtSv7-kFYAkNg4AvuLIEddi?usp=drive_link). 
 
