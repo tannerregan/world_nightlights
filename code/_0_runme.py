@@ -1,3 +1,5 @@
+comment for mallory
+
 """
 This file runs all files for the Illuminating Africa dataset creation.
 
