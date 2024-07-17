@@ -187,6 +187,40 @@ def open_etr_train_data(dmsp_f,viirs_f,aoi_gas,aoi_bff,aoi_rgn,jdir,year,prf):
     
     return df
 
+def open_etr_prdct_data(viirs_f,aoi_gas,aoi_bff,aoi_rgn,jdir,year,prf):     
+    """Opens and prepares training data for Extra Trees Regressor (ETR) from DMSP and VIIRS images.
+    
+    Args:
+        viirs_f (str): Path to the VIIRS raster file.
+        aoi_gas (str): Path to the gas mask raster file.
+        aoi_bff (str): Path to the buffered region raster file.
+        aoi_rgn (str): Path to the region raster file.
+        jdir (str): Directory for storing temporary files during processing.
+        year (str): Year of the data being processed.
+        prf (dict): Profile information for the data.
+
+    Returns:
+        pd.DataFrame: DataFrame containing the training data.
+    """
+    #get the viirs data at DMSP resolution (resampling with mean, median, min, max) and geographical regions, and data mask
+    viirs_arrays,viirs_names,mask_array=open_viirs_data(viirs_f,aoi_gas,aoi_bff,aoi_rgn,jdir,year,prf)  #open VIIRS data
+    viirs_df=arrays_to_frame(viirs_arrays,viirs_names, mask_array)
+    del viirs_arrays[1:], viirs_names[1:] #don't delete the mean that will be used in the next step
+    
+    #run uniform filters to get local means and variances over different window sizes on the mean VIIRS array
+    if viirs_names[0]=='VIIRS_mn': #Ensure that we use mean VIIRS for the filter
+        fltr_arrays,fltr_names=add_uni_filters(viirs_arrays[0]) #add spatial filters
+    else:
+        raise NameError('VIIRS_mn in wrong place of array list!')
+    fltr_df=arrays_to_frame(fltr_arrays,fltr_names, mask_array)
+    del fltr_arrays, viirs_arrays, mask_array
+    
+    #merge all dataframes together
+    df = pd.merge(viirs_df, fltr_df, left_index=True, right_index=True, how='inner')
+    del viirs_df, fltr_df
+    
+    return df
+
 def train_ETR(df,importance_csv):
     """Trains an Extra Trees Regressor (ETR) model on the provided training data.
     
@@ -297,9 +331,6 @@ def etr_predict_save(Best_ETR,is_topcoded,df,year,prf,out_f):
         prf (dict): Profile information for the output file.
         out_f (str): Path to save the downgraded VIIRS data.
     """
-    #a) open contemporaneous VIIRS, apply model.
-    #prdct_df=open_etr_prdct_data(viirs_f,aoi_gas,aoi_bff,aoi_rgn,jdir,year,prf)
-    
     #a) add indicators for regions
     for c in df.columns: #Make sure there are no missings
         if df[c].isna().sum()!=0:
@@ -352,7 +383,8 @@ def main(dmsp_f,viirs_f,aoi_gas,aoi_bff,aoi_rgn,jdir,val_f):
     for y in range(2014,2023+1):
         print("Downgrading VIIRS in "+str(y))
         start_time=time.time()
-        etr_predict_save(Best_ETR,is_topcoded,train_df,str(y),aoi_prf,dmsp_f)
+        prdct_df=open_etr_prdct_data(viirs_f,aoi_gas,aoi_bff,aoi_rgn,jdir,year=y,prf=aoi_prf)
+        etr_predict_save(Best_ETR,is_topcoded,prdct_df,str(y),aoi_prf,dmsp_f)
         print('Predict time: '+time.strftime("%H:%M:%S", time.gmtime(time.time() - start_time)))
         
     #v0) EXTRAS for validation----
@@ -363,7 +395,8 @@ def main(dmsp_f,viirs_f,aoi_gas,aoi_bff,aoi_rgn,jdir,val_f):
     print("Adding extras for validation of "+suffix+"-------------------")
     start_time=time.time()
     out_f=val_f.format(y='2012',c=suffix)
-    etr_predict_save(Best_ETR,is_topcoded,train_df,'2012',aoi_prf,out_f)
+    prdct_df=open_etr_prdct_data(viirs_f,aoi_gas,aoi_bff,aoi_rgn,jdir,year='2012',prf=aoi_prf)
+    etr_predict_save(Best_ETR,is_topcoded,prdct_df,'2012',aoi_prf,out_f)
     
     #v2) Add for validation (predict 2013 with 2012)
     del train_df
@@ -381,7 +414,8 @@ def main(dmsp_f,viirs_f,aoi_gas,aoi_bff,aoi_rgn,jdir,val_f):
     #v4) Predict using Best ETR for 2013
     start_time=time.time()
     out_f=val_f.format(y='2013',c=suffix)
-    etr_predict_save(Best_ETR,is_topcoded,train_df,'2013',aoi_prf,out_f)
+    prdct_df=open_etr_prdct_data(viirs_f,aoi_gas,aoi_bff,aoi_rgn,jdir,year='2013',prf=aoi_prf)
+    etr_predict_save(Best_ETR,is_topcoded,prdct_df,'2013',aoi_prf,out_f)
     print('Predict time: '+time.strftime("%H:%M:%S", time.gmtime(time.time() - start_time)))
     
     
@@ -392,7 +426,53 @@ if __name__ == "__main__":
     main(dmsp_f,viirs_f,aoi_gas,aoi_bff,aoi_rgn,jdir,val_f)
      
 #END---------------------------------------------------------------------------
+import os
+if os.getlogin() == "tanner_regan":
+    data_dir="C:/Users/tanner_regan/data_main/world_nightlights/"
+    code_dir="C:/Users/tanner_regan/Documents/GitHub/world_nightlights/code/"
+    
+#sub-directories
+sdir=data_dir+"/source/" #location of source data
+gdir=data_dir+"/gen/" #location of generated dat
+jdir=gdir+"/__junk/" #location to store temporary junk data
 
+#Input data paths
+dmsp_viirs_zip=sdir+"/Li_etal_2021_series/DMSP_VIIRS_1992_2018.zip"
+rc_d=sdir+"/DMSP_RC/"
+viirs_d=sdir+"/VIIRS/"
+dvnl_d=sdir+"/DVNL/"
+dmsp_ols_d=sdir+"/DMSP/"
+gasf_dir=sdir+"/gas_flaring/"
+wrld_rgn=sdir+"/admin_boundaries/world_regions.shp"
 
+#Input data paths
+dmsp_viirs_zip=sdir+"/Li_etal_2021_series/DMSP_VIIRS_1992_2018.zip"
+rc_d=sdir+"/DMSP_RC/"
+viirs_d=sdir+"/VIIRS/"
+dvnl_d=sdir+"/DVNL/"
+gasf_dir=sdir+"/gas_flaring/"
+wrld_rgn=sdir+"/admin_boundaries/world_regions.shp"
+
+#output files
+aoi_rgn=gdir+"/AOI_regions.tif"
+aoi_bff=gdir+"/AOI_buffered.tif"
+aoi_gas=gdir+"/AOI_gasmask.tif"
+dmsp_cln=gdir+"/clean_dmsp/DMSP{y}_cln.tif"
+sim_dmsp_cln=gdir+"/downgrade_viirs_validation/simDMSP{y}_cln.tif"
+dvnl=gdir+"/clean_dvnl/DVNL{y}.tif"
+dmsp_ols=gdir+"/clean_dmsp_ols/DMSP{y}_ols.tif"
+viirs_cln=gdir+"/clean_viirs/VIIRS{y}_cln.tif"
+blfx_f=gdir+"/bloom_fix/DMSP{y}_blfix.tif"
+tcfx_f=gdir+"/topcode_fix/DMSP{y}_tcfix.tif"
+bltcfx_f=gdir+"/bloomtopcode_fix/DMSP{y}_bltcfix.tif"
+val_f=gdir+"/downgrade_viirs_validation/DMSPhat{y}{c}_ETR.tif"
+
+dmsp_f=dmsp_cln
+viirs_f=viirs_cln
+val_f=val_f
+jdir=jdir
+aoi_rgn=aoi_rgn
+aoi_bff=aoi_bff
+aoi_gas=aoi_gas
         
 

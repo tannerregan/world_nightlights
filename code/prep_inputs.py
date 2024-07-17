@@ -5,7 +5,6 @@ import rasterio as rio
 import os, shutil, tarfile, math
 from rasterio import features
 from rasterio.transform import from_origin
-import pyproj
 from pyproj import CRS
 
 #Functions---------------------------------------------------------------------
@@ -155,9 +154,7 @@ def make_aoi_buffer(in_f, out_f, aoi_rgn, AOI_lst):
     """
     gdf = select_aoi(in_f,AOI_lst)
     gdf['OBJECTID'] = 1
-    # Project to Eckert IV projection, buffer, and project back
-    bff = gdf[['geometry', 'OBJECTID']].to_crs(crs=CRS.from_string('esri:54014')).dissolve(by='OBJECTID').buffer(7.5)
-    bff = bff.to_crs(gdf.crs)  # Project back to original CRS
+    bff = gdf[['geometry', 'OBJECTID']].dissolve(by='OBJECTID').buffer(0.066)
     gdf = gpd.GeoDataFrame(geometry=gpd.GeoSeries(bff))
     gdf['OBJECTID'] = 1
     prf = open_profile(aoi_rgn)

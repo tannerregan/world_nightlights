@@ -69,8 +69,7 @@ eog_password = "created_password"
 
 
 #Choose regions for your AOI
-AOI=['Antarctica',
- 'Asiatic Russia',
+AOI=['Asiatic Russia',
  'Australia/New Zealand',
  'Caribbean',
  'Central America',
