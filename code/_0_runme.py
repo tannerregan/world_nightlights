@@ -21,7 +21,7 @@ elif os.getlogin() == "your_account":
 else: raise ValueError('Path not correctly specified for this computer.')
 
 #choose whether to re-download source data
-download_from_source=True #set to false if you have already downloaded the data
+download_from_source=False #set to true if you want to download all data from scratch, false if you have already downloaded the data
 
 #sub-directories
 sdir=data_dir+"/source/" #location of source data
