@@ -104,13 +104,7 @@ def unzip_rc_viirs(year,rc_d,viirs_d,out_d):
         unzip_tar(rc_d+n+"_rad_v4.geotiff.tgz",out_d)
         img_f=out_d+n+"_rad_v4.avg_vis.tif"
     if int(year)>=2012:
-        if int(year)==2012:
-            n="VNL_v2_npp_201204-201303_global_vcmcfg"
-        if int(year)==2013:
-            n="VNL_v2_npp_2013_global_vcmcfg"
-        if int(year)>=2014:
-            n="VNL_v2_npp_{}_global_vcmslcfg".format(year)
-        fn=n+"_c202102150000.average_masked.tif"
+        fn='VNL_v21_npp_2013_global_vcmcfg_c202205302300.average_masked.dat.tif'
         unzip_gz(viirs_d,fn,out_d)
         img_f=out_d+fn
     return img_f        
@@ -199,7 +193,7 @@ def open_rasters(dmsp_f,rc_f,aoi_prf):
         check_data_match(dmsp_a,rc_a,dmsp_o,rc_o,dmsp_f) #ensure same shape, same projection, same bounds        
         stacked=np.concatenate((dmsp_a,rc_a),axis=0) #stack the arrays
         grid=np.stack((np.meshgrid(np.arange(dmsp_o.width), np.arange(dmsp_o.height)))) #add a grid of coordinates, same size as input raster
-        stacked=np.concatenate((dmsp_a,rc_a,grid),axis=0) #this is a three dimensional array where the first dimension has DMSP as element 0, and RC as element 1, second dimension is y and third dimension is x
+        stacked=np.concatenate((dmsp_a,rc_a,grid),axis=0) 
     return stacked
 
 def rank_tc(stacked):
@@ -308,6 +302,7 @@ def main(dmsp_d,rc_d,viirs_d,junk_d,tcfx_f):
         if int(year)<=2013: #double check that the year is right
             #unzip, crop, and resample RC and VIIRS
             img_f=unzip_rc_viirs(year,rc_d,viirs_d,junk_d)
+            
             #crop and resample RC and VIIRS
             clean_rc_viirs(img_f,rc_f,aoi_prf)
             
@@ -328,6 +323,8 @@ def main(dmsp_d,rc_d,viirs_d,junk_d,tcfx_f):
             
             #4. save to tiff (update profile to match range)
             save_to_file(dmsp_a_fix,tcfx_f.format(y=year),aoi_prf)
+        else:
+            print('year {} does not match DMSP available years'.format(int(year)))
     
 
 #SCRIPT------------------------------------------------------------------------
