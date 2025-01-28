@@ -12,7 +12,7 @@ This repository also serves as open source code for researchers to meet their sp
 1. Adjusting the cleaning processes (e.g. DMSP blooming and topcoding corrections, or VIIRS downgrading).
 2. Using alternative input DMSP or VIIRS data to produce the corrected series.
 
-The final dataset built with default settings is available for [download](https://drive.google.com/drive/folders/1smOB47MJra-vdDXyYvz5uXEA3NFsQj44?usp=sharing). However, we also strongly encourage those working with the data to read the source code provided in this repository. We welcome any constructive feedback that could help improve the code. 
+The final dataset built with default settings is available for [download](https://drive.google.com/drive/folders/1smOB47MJra-vdDXyYvz5uXEA3NFsQj44?usp=sharing). An earlier version of the data, compiled for Africa only is also available for [download](https://www.dropbox.com/scl/fo/3nib4l3nygazw1ai67ths/AChkbFLdKwo5UH2qLvUMN0o?rlkey=uj19jzlk8rphwbkfahpfa11po&st=gltz3fni&dl=0). However, we also strongly encourage those working with the data to read the source code provided in this repository. We welcome any constructive feedback that could help improve the code. 
 
 ## 1. Structure of the repository
 
