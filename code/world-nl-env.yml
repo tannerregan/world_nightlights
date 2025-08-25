@@ -1,4 +1,4 @@
-name: illuminating-env
+name: world-nl-env
 channels:
   - conda-forge
   - defaults
@@ -346,3 +346,4 @@ dependencies:
   - zstandard=0.22.0=py39h9bf74da_1
   - zstd=1.5.6=h0ea2cb4_0
 prefix: C:\Users\tanner_regan\Anaconda3\envs\illuminating-env
+
