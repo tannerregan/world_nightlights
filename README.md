@@ -2,7 +2,7 @@
 
 This repository provides the code required to produce the dataset described and used the main text of:
 
-Chiovelli, G., S. Michalopoulos, E. Papaioannou, and T. Regan, (2023). [Illuminating Africa?](https://tannerregan.github.io/tanner_regan/IlluminatingAfrica_Chiovelli_etal_unp2023.pdf)
+Chiovelli, G., S. Michalopoulos, E. Papaioannou, and T. Regan, (2025). [Illuminating the Global South](https://tannerregan.github.io/tanner_regan/Chiovelli_etal_unp2025.pdf).
 
 Please cite the above paper in any works using the code or data from this project.
 
@@ -69,10 +69,10 @@ Make sure to run in an environment with the following prerequisites.
 
 ### 1.3 Computing Environment
 
-You will need to install and activate our `illuminating-env` conda environment. Once you have [anaconda](https://www.anaconda.com/) installed on your machine, from the root directory of this repository, run:
+In order to replicate our data you will need to install and activate our `world-nl-env` conda environment. Once you have [anaconda](https://www.anaconda.com/) installed on your machine, from the root directory of this repository, run:
 ```
-conda env create -f code/environment.yml
-conda activate illuminating-env
+conda env create -f code/world-nl-env.yml
+conda activate world-nl-env
 ```
 
 The code was last run for the worldwide dataset during May 2024 on a 8-core Intel CPU (11th gen i9-11950H @ 2.60GHz) with 32 GB of RAM, 500 GB of fast local storage. Computation took one week.
