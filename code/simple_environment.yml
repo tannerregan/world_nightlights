@@ -1,4 +1,4 @@
-name: illuminating-env
+name: world-nl-simple-env
 channels:
   - conda-forge
   - defaults
