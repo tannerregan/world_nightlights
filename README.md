@@ -13,6 +13,13 @@ This repository also serves as open source code for researchers to meet their sp
 
 The final dataset built with default settings is available for [download](https://drive.google.com/drive/folders/1smOB47MJra-vdDXyYvz5uXEA3NFsQj44?usp=sharing). An earlier version of the data, compiled for Africa only, is also available for [download](https://www.dropbox.com/scl/fo/3nib4l3nygazw1ai67ths/AChkbFLdKwo5UH2qLvUMN0o?rlkey=uj19jzlk8rphwbkfahpfa11po&st=gltz3fni&dl=0). However, we also strongly encourage those working with the data to read the source code provided in this repository. We welcome any constructive feedback that could help improve the code. 
 
+Shield: [![CC BY 4.0][cc-by-shield]][cc-by]
+
+This work is licensed under a
+[Creative Commons Attribution 4.0 International License][cc-by].
+
+[cc-by]: http://creativecommons.org/licenses/by/4.0/
+[cc-by-shield]: https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg
 
 ## 1. Structure of the repository
 
@@ -102,14 +109,3 @@ All data used in this analysis is from free, publicly available sources and is a
 
 
 
-## 3 License
-Shield: [![CC BY 4.0][cc-by-shield]][cc-by]
-
-This work is licensed under a
-[Creative Commons Attribution 4.0 International License][cc-by].
-
-[![CC BY 4.0][cc-by-image]][cc-by]
-
-[cc-by]: http://creativecommons.org/licenses/by/4.0/
-[cc-by-image]: https://i.creativecommons.org/l/by/4.0/88x31.png
-[cc-by-shield]: https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg
