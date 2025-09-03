@@ -1,15 +1,4 @@
-Shield: [![CC BY 4.0][cc-by-shield]][cc-by]
-
-This work is licensed under a
-[Creative Commons Attribution 4.0 International License][cc-by].
-
-[![CC BY 4.0][cc-by-image]][cc-by]
-
-[cc-by]: http://creativecommons.org/licenses/by/4.0/
-[cc-by-image]: https://i.creativecommons.org/l/by/4.0/88x31.png
-[cc-by-shield]: https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg
-
-# Illuminating Africa?
+# World Nightlights
 This repository provides the code required to produce the dataset described and used the main text of:
 
 Chiovelli, G., S. Michalopoulos, E. Papaioannou, and T. Regan, (2025). [Illuminating the Global South](https://tannerregan.github.io/tanner_regan/IlluminatingGS_Chiovelli_etal_unp2025.pdf).
@@ -23,6 +12,7 @@ This repository also serves as open source code for researchers to meet their sp
 2. Using alternative input DMSP or VIIRS data to produce the corrected series.
 
 The final dataset built with default settings is available for [download](https://drive.google.com/drive/folders/1smOB47MJra-vdDXyYvz5uXEA3NFsQj44?usp=sharing). An earlier version of the data, compiled for Africa only, is also available for [download](https://www.dropbox.com/scl/fo/3nib4l3nygazw1ai67ths/AChkbFLdKwo5UH2qLvUMN0o?rlkey=uj19jzlk8rphwbkfahpfa11po&st=gltz3fni&dl=0). However, we also strongly encourage those working with the data to read the source code provided in this repository. We welcome any constructive feedback that could help improve the code. 
+
 
 ## 1. Structure of the repository
 
@@ -111,3 +101,15 @@ All data used in this analysis is from free, publicly available sources and is a
 7. `.\world_nightlights\source\DVNL\ ` contains data for DMSP-like Nighttime Lights Derived from VIIRS (DVNL) done by [Nechaev et al 2021](https://www.mdpi.com/2072-4292/13/24/5026). Download data for all available years (2013-2019). This was last downloaded 08/08/2022. It is available [here](https://eogdata.mines.edu/wwwdata/viirs_products/dvnl/).
 
 
+
+## 3 License
+Shield: [![CC BY 4.0][cc-by-shield]][cc-by]
+
+This work is licensed under a
+[Creative Commons Attribution 4.0 International License][cc-by].
+
+[![CC BY 4.0][cc-by-image]][cc-by]
+
+[cc-by]: http://creativecommons.org/licenses/by/4.0/
+[cc-by-image]: https://i.creativecommons.org/l/by/4.0/88x31.png
+[cc-by-shield]: https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg
