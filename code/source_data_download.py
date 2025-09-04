@@ -242,6 +242,7 @@ if __name__ == "__main__":
         'grant_type': 'password'
     }
     token_url = 'https://eogauth.mines.edu/auth/realms/master/protocol/openid-connect/token'
+    #NB: the link may have changed to: 'https://eogauth-new.mines.edu/realms/eog/protocol/openid-connect/token'
     
     # Request token
     response = requests.post(token_url, data=params)
