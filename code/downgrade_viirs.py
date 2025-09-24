@@ -242,7 +242,7 @@ def train_ETR(df,importance_csv):
             
     #c) Best parameters from a random grid search with 1% of sample, 10 iterations, 3 crossfolds
     best_params={'n_estimators': 150, 'min_samples_split': 16, 'min_samples_leaf': 4, 
-                 'max_features': 'sqrt', 'max_depth': 110, 'bootstrap': True}
+                 'max_features': 'sqrt', 'max_depth': 110, 'bootstrap': True,random_state=2406}
     
     #d) fit the best ETR model
     Best_ETR=ExtraTreesRegressor(**best_params)
