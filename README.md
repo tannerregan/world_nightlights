@@ -1,7 +1,7 @@
 # World Nightlights Construction
 This repository provides the code required to produce the dataset described and used the main text of:
 
-Chiovelli, G., S. Michalopoulos, E. Papaioannou, and T. Regan, (2025). [Illuminating the Global South](https://tannerregan.github.io/tanner_regan/IlluminatingGS_Chiovelli_etal_unp2025.pdf).
+Chiovelli, G., S. Michalopoulos, E. Papaioannou, and T. Regan, (2026). [Illuminating the Global South]([https://tannerregan.github.io/tanner_regan/IlluminatingGS_Chiovelli_etal_unp2025.pdf](https://doi.org/10.1093/ej/ueaf134)).
 
 Please cite the above paper in any works using the code or data from this project.
 
