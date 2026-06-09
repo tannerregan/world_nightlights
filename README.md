@@ -11,9 +11,11 @@ This repository also serves as open source code for researchers to meet their sp
 1. Adjusting the cleaning processes (e.g. DMSP blooming and topcoding corrections, or VIIRS downgrading).
 2. Using alternative input DMSP or VIIRS data to produce the corrected series.
 
-The final dataset built with default settings is available on Zenodo at [doi.org/10.5281/zenodo.20557570](doi.org/10.5281/zenodo.20557570), which we regularly update as new VIIRS data is released. However, we also strongly encourage those working with the data to read the source code provided in this repository. We welcome any constructive feedback that could help improve the code. 
+The dataset and replication package for the paper are available on Zenodo at [zenodo.org/records/17915327](https://zenodo.org/records/17915327). **[Stay tuned for an updated series in the coming days!]**
 
-An early version of the data was compiled for Africa only which corresponds to an earlier [working paper](https://www2.gwu.edu/~iiep/assets/docs/papers/2023WP/ReganIIEP2023-11.pdf). Though this Africa vintage has been superseded, we continue to keep it available on Zenodo at [doi.org/10.5281/zenodo.20557571](https://doi.org/10.5281/zenodo.20557571) in case researchers had used it and need a public record. We note that the pixel values should largely be similar, but will not be the same when comparing the final dataset with the old Africa version.
+<!--The final dataset built with default settings is available on Zenodo at [doi.org/10.5281/zenodo.20557570](doi.org/10.5281/zenodo.20557570), which we regularly update as new VIIRS data is released. However, we also strongly encourage those working with the data to read the source code provided in this repository. We welcome any constructive feedback that could help improve the code. 
+
+An early version of the data was compiled for Africa only which corresponds to an earlier [working paper](https://www2.gwu.edu/~iiep/assets/docs/papers/2023WP/ReganIIEP2023-11.pdf). Though this Africa vintage has been superseded, we continue to keep it available on Zenodo at [doi.org/10.5281/zenodo.20557571](https://doi.org/10.5281/zenodo.20557571) in case researchers had used it and need a public record. We note that the pixel values should largely be similar, but will not be the same when comparing the final dataset with the old Africa version.-->
 
 This work is licensed under a [Creative Commons Attribution 4.0 International License][cc-by]. [![CC BY 4.0][cc-by-shield]][cc-by] 
 
