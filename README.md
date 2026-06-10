@@ -1,5 +1,5 @@
 # World Nightlights Construction
-This repository provides the code required to produce the dataset described and used the main text of [Illuminating the Global South](https://doi.org/10.1093/ej/ueaf134). Please use the citation below to cite the paper in any works using the code or data from this project.
+This repository provides the code required to produce the dataset described and used in the main text of [Illuminating the Global South](https://doi.org/10.1093/ej/ueaf134). Please use the citation below to cite the paper in any works using the code or data from this project.
 
 Chiovelli, G., Michalopoulos, S., Papaioannou, E., and T. Regan (2026). Illuminating the Global South, *The Economic Journal*, ueaf134, https://doi.org/10.1093/ej/ueaf134.
 
