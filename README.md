@@ -3,7 +3,7 @@ This repository provides the code required to produce the dataset described and 
 
 Chiovelli, G., Michalopoulos, S., Papaioannou, E., and T. Regan (2026). Illuminating the Global South, *The Economic Journal*, ueaf134, https://doi.org/10.1093/ej/ueaf134.
 
-This project processes satellite imagery data to generate a consistent time series of nightlight data from 1992 to 2023. Initially, the scripts clean and correct various issues, including blooming and topcoding, in data collected by the DMSP satellites from 1992 to 2012. Subsequently, the project handles VIIRS data from 2013 to 2023, downgrading its resolution to match that of the earlier DMSP series. The result is a harmonized and continuous panel of global nightlights, facilitating longitudinal studies and analyses.
+This project processes satellite imagery data to generate a consistent time series of nightlight data from 1992 to present. Initially, the scripts clean and correct various issues, including blooming and topcoding, in data collected by the DMSP satellites from 1992 to 2012. Subsequently, the project handles VIIRS data from 2013 to present, downgrading its resolution to match that of the earlier DMSP series. The result is a harmonized and continuous panel of global nightlights, facilitating longitudinal studies and analyses.
 
 This repository also serves as open source code for researchers to meet their specific research needs by:
 1. Adjusting the cleaning processes (e.g. DMSP blooming and topcoding corrections, or VIIRS downgrading).
