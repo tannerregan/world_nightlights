@@ -1,9 +1,7 @@
 # World Nightlights Construction
-This repository provides the code required to produce the dataset described and used the main text of:
+This repository provides the code required to produce the dataset described and used the main text of [Illuminating the Global South](https://doi.org/10.1093/ej/ueaf134). Please use the citation below to cite the paper in any works using the code or data from this project.
 
-Chiovelli, G., S. Michalopoulos, E. Papaioannou, and T. Regan, (2026). [Illuminating the Global South](https://doi.org/10.1093/ej/ueaf134).
-
-Please cite the above paper in any works using the code or data from this project.
+Chiovelli, G., Michalopoulos, S., Papaioannou, E., and T. Regan (2026). Illuminating the Global South, *The Economic Journal*, ueaf134, https://doi.org/10.1093/ej/ueaf134.
 
 This project processes satellite imagery data to generate a consistent time series of nightlight data from 1992 to 2023. Initially, the scripts clean and correct various issues, including blooming and topcoding, in data collected by the DMSP satellites from 1992 to 2012. Subsequently, the project handles VIIRS data from 2013 to 2023, downgrading its resolution to match that of the earlier DMSP series. The result is a harmonized and continuous panel of global nightlights, facilitating longitudinal studies and analyses.
 
